@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using STIM.Utilities;
 using STIM.WinFormUI.ExtControl;
 using System.Xml;
+using System.IO;
 
 namespace STIM.WinFormUI
 {
@@ -27,6 +28,7 @@ namespace STIM.WinFormUI
         /// </summary>
         public Point layoutPoint = new Point();
 
+        XmlHelper xml = new XmlHelper();
         BLL.STIM_CONFIG bll = new BLL.STIM_CONFIG();
 
         public FrmMain()
@@ -36,7 +38,7 @@ namespace STIM.WinFormUI
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            propertyGrid1.SelectedObject =this ;
+            propertyGrid1.SelectedObject = this;
             BindSingleTableList();
         }
         private void BindSingleTableList()
@@ -110,23 +112,30 @@ namespace STIM.WinFormUI
             StimTxt.BringToFront();
             tabPageDetail.Controls.Add(StimTxt);
         }
-
         private void btnCustomLayout_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-        private void BtnSaveConfig_Click(object sender, EventArgs e)
+        private void btnSaveConfig_Click(object sender, EventArgs e)
         {
-            int stimX,stimY,stimWidth,stimHeight;
+            int stimX, stimY, stimWidth, stimHeight;
             int count = tabPageDetail.Controls.Count;
-            foreach (Control item in tabPageDetail.Controls)
-            {
-                stimX = item.Location.X;
-                stimY = item.Location.Y;
-                stimWidth = item.Width;
-                stimHeight = item.Height;
-            }
+            //foreach (Control item in tabPageDetail.Controls)
+            //{
+            //    stimX = item.Location.X;
+            //    stimY = item.Location.Y;
+            //    stimWidth = item.Width;
+            //    stimHeight = item.Height;
+            //}
+            MakeXml(tvSingleTableList.SelectedNode.Name);
         }
+
+        public void MakeXml(string tableName)
+        {
+            xml.XmlString ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><Table TableName=\"" + tableName + "\"><Lable>1</Lable><DataControl>2</DataControl></Table>";
+        }
+
+
     }
 }

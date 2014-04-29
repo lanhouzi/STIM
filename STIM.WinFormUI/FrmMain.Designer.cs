@@ -34,6 +34,7 @@
             this.tabPageDetail = new System.Windows.Forms.TabPage();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.tabPageDataGridView = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.grpRight = new System.Windows.Forms.GroupBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.grpLeft = new System.Windows.Forms.GroupBox();
@@ -43,10 +44,12 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.BtnSaveConfig = new System.Windows.Forms.Button();
+            this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.tabPageDataGridView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpRight.SuspendLayout();
             this.grpLeft.SuspendLayout();
             this.grpBottom.SuspendLayout();
@@ -108,6 +111,7 @@
             // 
             // tabPageDataGridView
             // 
+            this.tabPageDataGridView.Controls.Add(this.dataGridView1);
             this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
             this.tabPageDataGridView.Name = "tabPageDataGridView";
             this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
@@ -115,6 +119,16 @@
             this.tabPageDataGridView.TabIndex = 2;
             this.tabPageDataGridView.Text = "DataGridView布局";
             this.tabPageDataGridView.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(314, 306);
+            this.dataGridView1.TabIndex = 0;
             // 
             // grpRight
             // 
@@ -161,7 +175,7 @@
             this.grpBottom.Controls.Add(this.button5);
             this.grpBottom.Controls.Add(this.button4);
             this.grpBottom.Controls.Add(this.button3);
-            this.grpBottom.Controls.Add(this.BtnSaveConfig);
+            this.grpBottom.Controls.Add(this.btnSaveConfig);
             this.grpBottom.Controls.Add(this.btnCustomLayout);
             this.grpBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.grpBottom.Location = new System.Drawing.Point(200, 358);
@@ -207,15 +221,15 @@
             this.button3.Text = "button1";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // BtnSaveConfig
+            // btnSaveConfig
             // 
-            this.BtnSaveConfig.Location = new System.Drawing.Point(107, 20);
-            this.BtnSaveConfig.Name = "BtnSaveConfig";
-            this.BtnSaveConfig.Size = new System.Drawing.Size(75, 23);
-            this.BtnSaveConfig.TabIndex = 0;
-            this.BtnSaveConfig.Text = "保存配置";
-            this.BtnSaveConfig.UseVisualStyleBackColor = true;
-            this.BtnSaveConfig.Click += new System.EventHandler(this.BtnSaveConfig_Click);
+            this.btnSaveConfig.Location = new System.Drawing.Point(107, 20);
+            this.btnSaveConfig.Name = "btnSaveConfig";
+            this.btnSaveConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveConfig.TabIndex = 0;
+            this.btnSaveConfig.Text = "保存配置";
+            this.btnSaveConfig.UseVisualStyleBackColor = true;
+            this.btnSaveConfig.Click += new System.EventHandler(this.btnSaveConfig_Click);
             // 
             // btnCustomLayout
             // 
@@ -244,6 +258,8 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.grpMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
+            this.tabPageDataGridView.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grpRight.ResumeLayout(false);
             this.grpLeft.ResumeLayout(false);
             this.grpBottom.ResumeLayout(false);
@@ -265,12 +281,13 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button BtnSaveConfig;
+        private System.Windows.Forms.Button btnSaveConfig;
         private System.Windows.Forms.Button btnCustomLayout;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabPageDetail;
         private System.Windows.Forms.TabPage tabPageSearch;
         private System.Windows.Forms.TabPage tabPageDataGridView;
+        private System.Windows.Forms.DataGridView dataGridView1;
 
     }
 }

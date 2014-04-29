@@ -101,7 +101,9 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DetailForm.xml" />
+    <Content Include="DetailForm.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UILib\UILib.csproj">

@@ -1,23 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<root>
-  <Table TableName="">
-    <!--字段，字段名为数据库表列名-->
-    <Field FieldName="ColumnName">
-      <!--布局-->
-      <Layout X="" Y="" W="" H="">
-        <Lable></Lable>
-        <DataControl></DataControl>
-      </Layout>
-      <!--行为-->
-      <Action></Action>
-      <!--数据-->
-      <Data></Data>
-    </Field>
-    <Field FieldName="ColumnName">
-      <Layout></Layout>
-      <Action></Action>
-      <Data></Data>
-    </Field>
-  </Table>
-  <Table TableName=""></Table>
-</root>
+<Table TableName="">
+  <!--字段，字段名为数据库表列名-->
+  <Field FieldName="ColumnName">
+    <!--布局Location.X,Location.Y,Width,Height-->
+    <Layout X="" Y="" W="" H="">
+      <Lable></Lable>
+      <DataControl></DataControl>
+    </Layout>
+    <!--行为-->
+    <Action></Action>
+    <!--数据-->
+    <Data></Data>
+  </Field>
+  <Field FieldName="ColumnName">
+    <Layout></Layout>
+    <Action></Action>
+    <Data></Data>
+  </Field>
+</Table>
