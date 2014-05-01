@@ -87,7 +87,7 @@ namespace STIM.WinFormUI
         {
             //grpMain.Controls.Clear();
             StimWfTextBox StimTxt = new StimWfTextBox();
-            StimTxt.Name = "txt" + row["COLUMN_NAME"].ToString();
+            StimTxt.Name = row["COLUMN_NAME"].ToString();
             StimTxt.lblField.Text = row["COMMENTS"].ToString() + "：";
             //StimTxt.txtField.Text = row["COMMENTS"].ToString();
             StimTxt.Location = new Point(20 + layoutColumn * 300, 10 + layoutRow * 35);
@@ -119,21 +119,47 @@ namespace STIM.WinFormUI
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
         {
-            int stimX, stimY, stimWidth, stimHeight;
-            int count = tabPageDetail.Controls.Count;
-            //foreach (Control item in tabPageDetail.Controls)
-            //{
-            //    stimX = item.Location.X;
-            //    stimY = item.Location.Y;
-            //    stimWidth = item.Width;
-            //    stimHeight = item.Height;
-            //}
-            MakeXml(tvSingleTableList.SelectedNode.Name);
+            //控件字典
+            Dictionary<string, Dictionary<string, string>> dictControls = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (Control item in tabPageDetail.Controls)
+            {
+                //属性字典
+                Dictionary<string, string> dictAttributes = new Dictionary<string, string>();
+                //dictAttributes.Add("ColumnName", item.Name);
+                dictAttributes.Add("Visible", item.Visible.ToString());
+                dictAttributes.Add("X", item.Location.X.ToString());
+                dictAttributes.Add("Y", item.Location.Y.ToString());
+                dictAttributes.Add("W", item.Width.ToString());
+                dictAttributes.Add("H", item.Height.ToString());
+
+                //把属性字典添加到空间字典
+                dictControls.Add(item.Name, dictAttributes);
+            }
+
+            MakeXml(tvSingleTableList.SelectedNode.Name, dictControls);
+            //bll.Update ()
         }
 
-        public void MakeXml(string tableName)
+        public void MakeXml(string tableName, Dictionary<string, Dictionary<string, string>> dictControls)
         {
-            xml.XmlString ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><Table TableName=\"" + tableName + "\"><Lable>1</Lable><DataControl>2</DataControl></Table>";
+            xml.XmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><Table TableName=\"" + tableName + "\"></Table>";
+
+            foreach (var control in dictControls)
+            {
+                //<Table TableName="GOODS_EXT" X="1">
+                xml.Insert(XmlSourceTypeEnum.FromString, "Table", "Column", "ColumnName", control.Key);
+                foreach (var attribute in control.Value)
+                {
+                    //<Column ColumnName="GOODS_EXT" X="1">
+                    xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "", attribute.Key, attribute.Value);
+                }
+                //<Lable>1</Lable>
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "Lable", "", "1");
+                //<DataControl X="1" />
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "DataControl", "W", "1");
+            }
+
         }
 
 

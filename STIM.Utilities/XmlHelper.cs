@@ -5,6 +5,21 @@ using System.Xml;
 namespace STIM.Utilities
 {
     /// <summary>
+    /// XML数据源类型
+    /// </summary>
+    public enum XmlSourceTypeEnum
+    {
+        /// <summary>
+        /// 来自File文件
+        /// </summary>
+        FromFile,
+        /// <summary>
+        /// 来自String字符串
+        /// </summary>
+        FromString
+    }
+
+    /// <summary>
     /// XML 文件操作类
     /// </summary>
     public class XmlHelper
@@ -17,20 +32,6 @@ namespace STIM.Utilities
         /// Xml文件路径
         /// </summary>
         public string XmlPath { get; set; }
-        /// <summary>
-        /// XML数据源类型
-        /// </summary>
-        public enum XmlSourceTypeEnum
-        {
-            /// <summary>
-            /// 来自File文件
-            /// </summary>
-            FromFile,
-            /// <summary>
-            /// 来自String字符串
-            /// </summary>
-            FromString
-        }
         #region Method
 
         public void LoadXml(XmlSourceTypeEnum sourceType, XmlDocument doc)
@@ -99,9 +100,9 @@ namespace STIM.Utilities
         /// <returns></returns>
         /**************************************************
          * 使用示列:
-         * XmlHelper.Insert(path, "/Node", "Element", "", "Value")
-         * XmlHelper.Insert(path, "/Node", "Element", "Attribute", "Value")
-         * XmlHelper.Insert(path, "/Node", "", "Attribute", "Value")
+         * XmlHelper.Insert(sourceType, "/Node", "Element", "", "Value")
+         * XmlHelper.Insert(sourceType, "/Node", "Element", "Attribute", "Value")
+         * XmlHelper.Insert(sourceType, "/Node", "", "Attribute", "Value")
          ************************************************/
         public void Insert(XmlSourceTypeEnum sourceType, string node, string element, string attribute, string value)
         {

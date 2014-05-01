@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Table TableName="">
-  <!--字段，字段名为数据库表列名-->
-  <Field FieldName="ColumnName">
-    <!--布局Location.X,Location.Y,Width,Height-->
-    <Layout X="" Y="" W="" H="">
-      <Lable></Lable>
-      <DataControl></DataControl>
-    </Layout>
-    <!--行为-->
-    <Action></Action>
-    <!--数据-->
-    <Data></Data>
-  </Field>
-  <Field FieldName="ColumnName">
-    <Layout></Layout>
-    <Action></Action>
-    <Data></Data>
-  </Field>
+<Table TableName="TableName">
+  <!--ColumnName,布局Location.X,Location.Y,Width,Height-->
+  <Column ColumnName="ColumnName" X="" Y="" W="" H="">
+    <Lable></Lable>
+    <DataControl></DataControl>
+  </Column>
+  <Column ColumnName="ColumnName" X="" Y="" W="" H="">
+    <Lable></Lable>
+    <DataControl></DataControl>
+  </Column>
 </Table>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<Table TableName="GOODS_EXT" X="1">
+  <Layout X="1" />
+  <Layout>1</Layout>
+</Table>-->
