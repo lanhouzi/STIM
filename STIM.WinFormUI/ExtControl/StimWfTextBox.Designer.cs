@@ -66,24 +66,23 @@
             // 
             // txtField
             // 
-            this.txtField.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txtField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtField.Location = new System.Drawing.Point(96, 4);
             this.txtField.Multiline = true;
             this.txtField.Name = "txtField";
             this.txtField.Size = new System.Drawing.Size(150, 21);
             this.txtField.TabIndex = 1;
-            this.txtField.Text = "Test";
             // 
             // StimWfTextBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.TLP);
             this.Name = "StimWfTextBox";
-            this.Size = new System.Drawing.Size(250, 30);
+            this.Size = new System.Drawing.Size(250, 29);
             this.TLP.ResumeLayout(false);
             this.TLP.PerformLayout();
             this.ResumeLayout(false);

@@ -73,11 +73,9 @@ namespace STIM.OracleDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update STIM_CONFIG set ");
-            strSql.Append("SEARCH_FORM_XML=:SEARCH_FORM_XML,");
-            strSql.Append("DETAIL_FORM_XML=:DETAIL_FORM_XML,");
-            strSql.Append("DATAGRIDVIEW_XML=:DATAGRIDVIEW_XML,");
-            strSql.Append("REMARK=:REMARK");
-            strSql.Append(" where TABLE_NAME=:TABLE_NAME ");
+            strSql.Append("SEARCH_FORM_XML=:SEARCH_FORM_XML,DETAIL_FORM_XML=:DETAIL_FORM_XML,DATAGRIDVIEW_XML=:DATAGRIDVIEW_XML,REMARK=:REMARK");
+            strSql.Append(" where TABLE_NAME=:TABLE_NAME");
+
             OracleParameter[] parameters = {
                     new OracleParameter(":SEARCH_FORM_XML", OracleDbType.NClob),
                     new OracleParameter(":DETAIL_FORM_XML", OracleDbType.NClob),

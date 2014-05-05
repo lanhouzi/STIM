@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.grpMain = new System.Windows.Forms.GroupBox();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPageDetail = new System.Windows.Forms.TabPage();
@@ -46,6 +46,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabPageDataGridView.SuspendLayout();
@@ -55,13 +58,16 @@
             this.grpBottom.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(734, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.toolStripProgressBar1});
+            this.statusStrip.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(734, 22);
+            this.statusStrip.TabIndex = 0;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // grpMain
             // 
@@ -241,6 +247,19 @@
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(386, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(300, 16);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -250,12 +269,14 @@
             this.Controls.Add(this.grpBottom);
             this.Controls.Add(this.grpRight);
             this.Controls.Add(this.grpLeft);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmMain";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.grpMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
             this.tabPageDataGridView.ResumeLayout(false);
@@ -270,7 +291,7 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.GroupBox grpMain;
         private System.Windows.Forms.GroupBox grpRight;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
@@ -288,6 +309,8 @@
         private System.Windows.Forms.TabPage tabPageSearch;
         private System.Windows.Forms.TabPage tabPageDataGridView;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
 
     }
 }

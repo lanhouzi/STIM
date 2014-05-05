@@ -212,7 +212,17 @@ namespace STIM.Utilities
                 return;
             }
         }
-
+        /// <summary>
+        /// 选择匹配 XPath 表达式的节点列表。
+        /// </summary>
+        /// <param name="node">"/Node/Element[@Attribute='Name']"</param>
+        /// <returns>XmlNodeList</returns>
+        public XmlNodeList SelectNodes(string node)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(XmlString);
+             return doc.SelectNodes(node);
+        }
         #endregion
 
         #region ===

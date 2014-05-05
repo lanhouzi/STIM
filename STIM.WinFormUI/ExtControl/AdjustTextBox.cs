@@ -48,7 +48,7 @@ namespace STIM.WinFormUI.ExtControl
 
         private void InitCtrl()
         {
-            this.Text = "Test";
+            //this.Text = "Test";
             this.Multiline = true;
             this.BorderStyle = BorderStyle.FixedSingle;
             //this.ReadOnly = true;
