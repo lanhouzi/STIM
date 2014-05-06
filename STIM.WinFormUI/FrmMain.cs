@@ -11,6 +11,7 @@ using STIM.WinFormUI.ExtControl;
 using System.Xml;
 using System.IO;
 using STIM.Model;
+using System.Xml.Linq;
 
 namespace STIM.WinFormUI
 {
@@ -74,11 +75,8 @@ namespace STIM.WinFormUI
                 XmlNodeList xnList = xml.SelectNodes("/Table/Column");
                 foreach (XmlNode item in xnList)
                 {
-                    XmlAttributeCollection attrCollection = item.Attributes;
-                    CreatStimControl(attrCollection);
+                    CreatStimControl(item);
                 }
-
-
             }
             //系统自动有序布局控件
             else
@@ -125,19 +123,30 @@ namespace STIM.WinFormUI
             StimTxt.BringToFront();
             tabPageDetail.Controls.Add(StimTxt);
         }
-        public void CreatStimControl(XmlAttributeCollection attrCollection, bool draggable = false)
+        public void CreatStimControl(XmlNode xmlNode, bool draggable = false)
         {
+            XmlAttributeCollection attrCollection = xmlNode.Attributes;
             //grpMain.Controls.Clear();
-            StimWfTextBox StimTxt = new StimWfTextBox();
-            StimTxt.Name = attrCollection["ColumnName"].Value;
-            StimTxt.lblField.Text = attrCollection["ColumnName"].Value;
-            StimTxt.Location = new Point(int.Parse(attrCollection["X"].Value), int.Parse(attrCollection["Y"].Value));
-            StimTxt.Width = int.Parse(attrCollection["W"].Value);
-           
+            StimWfTextBox stimTxt = new StimWfTextBox
+            {
+                Name = attrCollection["ColumnName"].Value,
+                Location = new Point(int.Parse(attrCollection["X"].Value), int.Parse(attrCollection["Y"].Value)),
+                Width = int.Parse(attrCollection["W"].Value),
+                Height = int.Parse(attrCollection["H"].Value),
+                Visible = bool.Parse(attrCollection["Visible"].Value),
+                Enabled = bool.Parse(attrCollection["Enabled"].Value),
+                lblField =
+                {
+                    Text = attrCollection["ColumnName"].Value
+                },
+                txtField =
+                {
+                    Text = attrCollection["ColumnName"].Value//,
+                    // Width =int.Parse(xmlNode.SelectSingleNode( "DataControl").Attributes["W"].Value)
+                }
+            };
 
-            StimTxt.Height = int.Parse(attrCollection["H"].Value);
-            StimTxt.Visible = bool.Parse(attrCollection["Visible"].Value);
-            StimTxt.Enabled = bool.Parse(attrCollection["Enabled"].Value);
+
             //只对更新操作生效
             //if (VoidNameEnum.Update == VoidName && null != DGVR)
             //{
@@ -149,15 +158,15 @@ namespace STIM.WinFormUI
             {
                 //给文本框绑定值
                 //StimTxt.txtField.ReadOnly = true;
-                StimTxt.txtField.Enabled = false;
+                stimTxt.txtField.Enabled = false;
             }
 
             ////注册按钮点击事件
             //StimTxt.Click += delegate { propertyGrid1.SelectedObject = StimTxt.txtField; };
             //拖动属性
-            StimTxt.Draggable(draggable);
-            StimTxt.BringToFront();
-            tabPageDetail.Controls.Add(StimTxt);
+            stimTxt.Draggable(draggable);
+            stimTxt.BringToFront();
+            tabPageDetail.Controls.Add(stimTxt);
         }
 
         private void btnCustomLayout_Click(object sender, EventArgs e)
@@ -174,13 +183,15 @@ namespace STIM.WinFormUI
             foreach (Control item in tabPageDetail.Controls)
             {
                 //属性字典
-                Dictionary<string, string> dictAttributes = new Dictionary<string, string>();
-                dictAttributes.Add("Visible", item.Visible.ToString());
-                dictAttributes.Add("Enabled", item.Enabled.ToString());
-                dictAttributes.Add("X", item.Location.X.ToString());
-                dictAttributes.Add("Y", item.Location.Y.ToString());
-                dictAttributes.Add("W", item.Width.ToString());
-                dictAttributes.Add("H", item.Height.ToString());
+                Dictionary<string, string> dictAttributes = new Dictionary<string, string>
+                {
+                    {"Visible", item.Visible.ToString()},
+                    {"Enabled", item.Enabled.ToString()},
+                    {"X", item.Location.X.ToString()},
+                    {"Y", item.Location.Y.ToString()},
+                    {"W", item.Width.ToString()},
+                    {"H", item.Height.ToString()}
+                };
 
                 //把属性字典添加到空间字典
                 dictControls.Add(item.Name, dictAttributes);
@@ -206,16 +217,18 @@ namespace STIM.WinFormUI
             foreach (var control in dictControls)
             {
                 //<Table TableName="GOODS_EXT" X="1">
-                xml.Insert(XmlSourceTypeEnum.FromString, "Table", "Column", "ColumnName", control.Key);
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table", "Column", "ColumnName", control.Key);
                 foreach (var attribute in control.Value)
                 {
+
                     //<Column ColumnName="GOODS_EXT" X="1">
                     xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "", attribute.Key, attribute.Value);
                 }
                 //<Lable>1</Lable>
                 xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "Lable", "", "1");
                 //<DataControl X="1" />
-                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "DataControl", "W", "1");
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "DataControl", "", "150");
+
             }
             return xml.XmlString;
         }
