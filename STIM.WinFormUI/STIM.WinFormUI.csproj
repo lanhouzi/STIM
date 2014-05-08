@@ -52,11 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateStimControl.cs" />
     <Compile Include="ExtControl\AdjustTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ExtControl\AdjustTextBox.Designer.cs">
       <DependentUpon>AdjustTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtControl\StimWfDateTimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtControl\StimWfDateTimePicker.Designer.cs">
+      <DependentUpon>StimWfDateTimePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtControl\StimWfTextBox.cs">
       <SubType>UserControl</SubType>
@@ -72,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ExtControl\StimWfDateTimePicker.resx">
+      <DependentUpon>StimWfDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExtControl\StimWfTextBox.resx">
       <DependentUpon>StimWfTextBox.cs</DependentUpon>
     </EmbeddedResource>

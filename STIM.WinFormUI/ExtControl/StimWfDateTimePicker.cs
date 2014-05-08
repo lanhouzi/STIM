@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace STIM.WinFormUI.ExtControl
 {
-    public partial class StimWfTextBox : UserControl
+    public partial class StimWfDateTimePicker : UserControl
     {
         public string DataSource { get; set; }
-        public StimWfTextBox()
+        public StimWfDateTimePicker()
         {
             InitializeComponent();
             ChildDraggableToFather();
