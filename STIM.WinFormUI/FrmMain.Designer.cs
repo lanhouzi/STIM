@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.grpMain = new System.Windows.Forms.GroupBox();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPageDetail = new System.Windows.Forms.TabPage();
@@ -46,11 +48,11 @@
             this.button3 = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.tabPageDetail.SuspendLayout();
             this.tabPageDataGridView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpRight.SuspendLayout();
@@ -68,6 +70,19 @@
             this.statusStrip.Size = new System.Drawing.Size(734, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(417, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(300, 16);
             // 
             // grpMain
             // 
@@ -97,6 +112,7 @@
             // tabPageDetail
             // 
             this.tabPageDetail.AutoScroll = true;
+            this.tabPageDetail.Controls.Add(this.comboBox1);
             this.tabPageDetail.Location = new System.Drawing.Point(4, 22);
             this.tabPageDetail.Name = "tabPageDetail";
             this.tabPageDetail.Padding = new System.Windows.Forms.Padding(3);
@@ -247,18 +263,13 @@
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
             // 
-            // toolStripStatusLabel1
+            // comboBox1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(386, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(300, 16);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(110, 98);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 0;
             // 
             // FrmMain
             // 
@@ -279,6 +290,7 @@
             this.statusStrip.PerformLayout();
             this.grpMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
+            this.tabPageDetail.ResumeLayout(false);
             this.tabPageDataGridView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grpRight.ResumeLayout(false);
@@ -311,6 +323,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ComboBox comboBox1;
 
     }
 }

@@ -1,15 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace STIM.WinFormUI.ExtControl
 {
-    public partial class StimWfTextBox : UserControl
+    public partial class StimControl : UserControl
     {
-        public StimWfTextBox()
+        public Control DataFile { get; set; }
+        public string DataSource { get; set; }
+        public StimControl()
         {
             InitializeComponent();
+        }
+        public StimControl(Control dataFile)
+            : this()
+        {
+            DataFile = dataFile;
+            DataFile.Name = "dataFile";
+            TLP.AutoSize = true;
+            TLP.Controls.Add(DataFile, 1, 0);
             ChildDraggableToFather();
         }
+
         /// <summary>
         /// 把自控件的拖动属性赋给父控件
         /// </summary>

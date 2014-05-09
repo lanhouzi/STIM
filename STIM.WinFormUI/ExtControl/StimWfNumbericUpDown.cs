@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace STIM.WinFormUI.ExtControl
 {
-    public partial class StimWfTextBox : UserControl
+    public partial class StimWfNumbericUpDown : UserControl
     {
-        public StimWfTextBox()
+        public StimWfNumbericUpDown()
         {
-            InitializeComponent();
             ChildDraggableToFather();
         }
         /// <summary>

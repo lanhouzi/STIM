@@ -38,15 +38,16 @@ namespace STIM.WinFormUI
         }
         private void BindSingleTableList()
         {
-            string strWhere = "";
-            DataSet ds = _bll.GetListForTreeView(strWhere);
-            if (null != ds && ds.Tables.Count > 0 && null != ds.Tables[0] && ds.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    tvSingleTableList.Nodes.Add(row["TABLE_NAME"].ToString(), row["REMARK"].ToString());
-                }
-            }
+            //string strWhere = "";
+            //DataSet ds = _bll.GetListForTreeView(strWhere);
+            //if (null != ds && ds.Tables.Count > 0 && null != ds.Tables[0] && ds.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        tvSingleTableList.Nodes.Add(row["TABLE_NAME"].ToString(), row["REMARK"].ToString());
+            //    }
+            //}
+            tvSingleTableList.Nodes.Add("GOODS_EXT", "GOODS_EXT");
         }
 
         private void tvSingleTableList_AfterSelect(object sender, TreeViewEventArgs e)
@@ -54,7 +55,8 @@ namespace STIM.WinFormUI
             _layoutRow = -1;
             _layoutColumn = -1;
             tabPageDetail.Controls.Clear();
-            _model = _bll.GetModel(e.Node.Name);
+            //_model = _bll.GetModel(e.Node.Name);
+            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
             //按照自定义配置布局控件
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
@@ -89,7 +91,7 @@ namespace STIM.WinFormUI
         public void CreatStimControl(DataRow row, bool draggable = false)
         {
             //grpMain.Controls.Clear();
-            StimWfTextBox StimTxt = new StimWfTextBox();
+            StimControl StimTxt = new StimControl();
             StimTxt.Name = row["COLUMN_NAME"].ToString();
             StimTxt.lblFile.Text = row["COMMENTS"].ToString() + "：";
             StimTxt.Location = new Point(20 + _layoutColumn * 300, 10 + _layoutRow * 35);
@@ -104,7 +106,7 @@ namespace STIM.WinFormUI
             {
                 StimTxt.Enabled = false;
                 //StimTxt.dataFile.ReadOnly = true;
-                StimTxt.dataFile.Enabled = false;
+                StimTxt.DataFile.Enabled = false;
             }
 
             ////注册按钮点击事件
@@ -117,42 +119,9 @@ namespace STIM.WinFormUI
         public void CreatStimControl(XElement xElement, bool draggable = false)
         {
             //获取控件类型
-            Type ty = Type.GetType((string)xElement.Attribute("ControlType"));
-            //根据控件类型自动创建相应的控件
-            Control autoControl = (Control)Activator.CreateInstance(ty);
-            switch (ty.Name)
-            {
-                case "StimWfTextBox":
-                   
-                    break;
-                default:
-                    break;
-            }
-                
+            CreateStimControl stimControl = new CreateStimControl(xElement,draggable);
 
-            StimWfTextBox stimTxt = new StimWfTextBox
-            {
-                Name = (string)xElement.Attribute("ColumnName"),
-                Location = new Point((int)xElement.Attribute("X"), (int)xElement.Attribute("Y")),
-                Width = (int)xElement.Attribute("W"),
-                Height = (int)xElement.Attribute("H"),
-                Visible = (bool)xElement.Attribute("Visible"),
-                Enabled = (bool)xElement.Attribute("Enabled"),
-                lblFile =
-                {
-                    Text = (string)xElement.Attribute("ColumnName")
-                },
-                dataFile =
-                {
-                    Enabled = (bool)xElement.Attribute("Enabled"),
-                    Width = (int)xElement.Element("DataControl").Attribute("W"),
-                    Height = (int)xElement.Element("DataControl").Attribute("H")
-                }
-            };
-            //拖动属性
-            stimTxt.Draggable(draggable);
-            stimTxt.BringToFront();
-            tabPageDetail.Controls.Add(stimTxt);
+            tabPageDetail.Controls.Add(stimControl.AutoStimControl);
         }
 
         private void btnCustomLayout_Click(object sender, EventArgs e)
@@ -166,15 +135,15 @@ namespace STIM.WinFormUI
             var controls = tabPageDetail.Controls;
             _model.DETAIL_FORM_XML = MakeXmlLinq(tableName, controls);
 
-            bool result = _bll.Update(_model);
-            if (result)
-            {
-                MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //bool result = _bll.Update(_model);
+            //if (result)
+            //{
+            //    MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
         /// <summary>
         /// 使用 LINQ to XML 的方式创建XML
@@ -195,7 +164,8 @@ namespace STIM.WinFormUI
                 XElement xEle =
                     new XElement("Column",
                         new XAttribute("ColumnName", control.Name),
-                        new XAttribute("ControlType", control.GetType().ToString()),
+                        //new XAttribute("ControlType", control.GetType().ToString()),
+                        new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
                         new XAttribute("Enabled", control.Enabled.ToString()),
                         new XAttribute("X", control.Location.X),
@@ -217,6 +187,9 @@ namespace STIM.WinFormUI
                     );
                 xDoc.Root.Add(xEle);
             }
+
+            xDoc.Save(Application.StartupPath + "\\DetailForm.xml");
+
             return xDoc.Declaration.ToString() + "\r\n" + xDoc.ToString(SaveOptions.None);
         }
 
@@ -241,6 +214,6 @@ namespace STIM.WinFormUI
             return xml.XmlString;
         }
 
-        
+
     }
 }
