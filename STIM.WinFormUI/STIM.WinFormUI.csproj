@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>stim.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -129,7 +132,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <Content Include="bin\Debug\DetailForm.xml" />
+    <Content Include="bin\Debug\DetailForm.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="stim.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UILib\UILib.csproj">

@@ -46,12 +46,31 @@ namespace STIM.WinFormUI
                     RadioButton radioButton = new RadioButton();
                     AutoStimControl = CreateStimWfRadioButton(radioButton, xElement, draggable);
                     break;
+                case "ComboBox":
+                    ComboBox comboBox = new ComboBox();
+                    AutoStimControl = CreateStimWfComboBox(comboBox, xElement, draggable);
+                    break;
+                case "CheckedListBox":
+                    CheckedListBox checkedListBox = new CheckedListBox();
+                    AutoStimControl = CreateStimWfCheckedListBox(checkedListBox, xElement, draggable);
+                    break;
+                case "ListBox":
+                    ListBox listBox = new ListBox();
+                    AutoStimControl = CreateStimWfListBox(listBox, xElement, draggable);
+                    break;
+                case "DataGridView":
+                    DataGridView dataGridView = new DataGridView();
+                    AutoStimControl = CreateStimWfDataGridView(dataGridView, xElement, draggable);
+                    break;
                 default:
                     TextBox txt = new TextBox();
                     AutoStimControl = CreateStimWfTextBox(txt, xElement, draggable);
                     break;
             }
         }
+
+
+
         /// <summary>
         /// 创建Stim控件基类
         /// </summary>
@@ -151,6 +170,17 @@ namespace STIM.WinFormUI
         {
             //
             //TODO 数据空间的处理操作 control.DropDownStyle = ComboBoxStyle.DropDownList;
+            //
+            StimControl stimControl = CreateStimBasic(control, xElement);
+            //拖动属性
+            stimControl.Draggable(draggable);
+            stimControl.BringToFront();
+            return stimControl;
+        }
+        private StimControl CreateStimWfCheckedListBox(CheckedListBox control, XElement xElement, bool draggable)
+        {
+            //
+            //TODO 数据空间的处理操作 control.SelectionMode = SelectionMode.MultiExtended;
             //
             StimControl stimControl = CreateStimBasic(control, xElement);
             //拖动属性
