@@ -35,7 +35,6 @@
             this.grpMain = new System.Windows.Forms.GroupBox();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPageDetail = new System.Windows.Forms.TabPage();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.tabPageDataGridView = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -50,10 +49,10 @@
             this.button3 = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
-            this.tabPageDetail.SuspendLayout();
             this.tabPageDataGridView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grpRight.SuspendLayout();
@@ -113,7 +112,6 @@
             // tabPageDetail
             // 
             this.tabPageDetail.AutoScroll = true;
-            this.tabPageDetail.Controls.Add(this.comboBox1);
             this.tabPageDetail.Location = new System.Drawing.Point(4, 22);
             this.tabPageDetail.Name = "tabPageDetail";
             this.tabPageDetail.Padding = new System.Windows.Forms.Padding(3);
@@ -121,14 +119,6 @@
             this.tabPageDetail.TabIndex = 0;
             this.tabPageDetail.Text = "详细表单布局";
             this.tabPageDetail.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(110, 98);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 0;
             // 
             // tabPageSearch
             // 
@@ -202,6 +192,7 @@
             // 
             // grpBottom
             // 
+            this.grpBottom.Controls.Add(this.textBox1);
             this.grpBottom.Controls.Add(this.button6);
             this.grpBottom.Controls.Add(this.button5);
             this.grpBottom.Controls.Add(this.button4);
@@ -272,6 +263,13 @@
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(269, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 1;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -292,12 +290,12 @@
             this.statusStrip.PerformLayout();
             this.grpMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
-            this.tabPageDetail.ResumeLayout(false);
             this.tabPageDataGridView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grpRight.ResumeLayout(false);
             this.grpLeft.ResumeLayout(false);
             this.grpBottom.ResumeLayout(false);
+            this.grpBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,7 +323,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }

@@ -90,11 +90,8 @@ namespace STIM.WinFormUI
         }
         public void CreatStimControl(DataRow row, bool draggable = false)
         {
-            //grpMain.Controls.Clear();
-            StimControl StimTxt = new StimControl();
-            StimTxt.Name = row["COLUMN_NAME"].ToString();
-            StimTxt.lblFile.Text = row["COMMENTS"].ToString() + "：";
-            StimTxt.Location = new Point(20 + _layoutColumn * 300, 10 + _layoutRow * 35);
+            CreateStimControl stimControl = new CreateStimControl(row, draggable);
+            stimControl.AutoStimControl.Location = new Point(20 + _layoutColumn * 300, 10 + _layoutRow * 35);
             //只对更新操作生效
             //if (VoidNameEnum.Update == VoidName && null != DGVR)
             //{
@@ -104,17 +101,14 @@ namespace STIM.WinFormUI
             //只读属性，通过是否主键判断 Y:是，N:否
             if ("Y" == row["ISPK"].ToString())
             {
-                StimTxt.Enabled = false;
+                //stimControl.AutoStimControl.Enabled = false;
                 //StimTxt.dataFile.ReadOnly = true;
-                StimTxt.DataFile.Enabled = false;
+                stimControl.AutoStimControl.DataFile.Enabled = false;
             }
-
             ////注册按钮点击事件
-            //StimTxt.Click += delegate { propertyGrid1.SelectedObject = StimTxt.dataFile; };
-            //拖动属性
-            StimTxt.Draggable(draggable);
-            StimTxt.BringToFront();
-            tabPageDetail.Controls.Add(StimTxt);
+            //stimControl.AutoStimControl.Click += delegate { propertyGrid1.SelectedObject = stimControl.AutoStimControl.dataFile; };
+            tabPageDetail.Controls.Add(stimControl.AutoStimControl);
+            
         }
         public void CreatStimControl(XElement xElement, bool draggable = false)
         {
@@ -163,7 +157,7 @@ namespace STIM.WinFormUI
             {
                 XElement xEle =
                     new XElement("Column",
-                        new XAttribute("ColumnName", control.Name),
+                        new XAttribute("Column_Name", control.Name),
                         //new XAttribute("ControlType", control.GetType().ToString()),
                         new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
@@ -200,16 +194,16 @@ namespace STIM.WinFormUI
             foreach (var control in dictControls)
             {
                 //<Table TableName="GOODS_EXT" X="1">
-                xml.Insert(XmlSourceTypeEnum.FromString, "/Table", "Column", "ColumnName", control.Key.Name);
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table", "Column", "Column_Name", control.Key.Name);
                 foreach (var attribute in control.Value)
                 {
-                    //<Column ColumnName="GOODS_EXT" X="1">
-                    xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "", attribute.Key, attribute.Value);
+                    //<Column Column_Name="GOODS_EXT" X="1">
+                    xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@Column_Name='" + control.Key + "']", "", attribute.Key, attribute.Value);
                 }
                 //<Lable>1</Lable>
-                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "Lable", "", "1");
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@Column_Name='" + control.Key + "']", "Lable", "", "1");
                 //<DataControl X="150" />
-                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@ColumnName='" + control.Key + "']", "DataControl", "W", "180");
+                xml.Insert(XmlSourceTypeEnum.FromString, "/Table/Column[@Column_Name='" + control.Key + "']", "DataControl", "W", "180");
             }
             return xml.XmlString;
         }
