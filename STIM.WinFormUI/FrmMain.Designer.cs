@@ -43,13 +43,13 @@
             this.grpLeft = new System.Windows.Forms.GroupBox();
             this.tvSingleTableList = new System.Windows.Forms.TreeView();
             this.grpBottom = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -205,7 +205,14 @@
             this.grpBottom.Size = new System.Drawing.Size(334, 81);
             this.grpBottom.TabIndex = 9;
             this.grpBottom.TabStop = false;
-            this.grpBottom.Text = "操作区";
+            this.grpBottom.Text = "操作区域";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(269, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 1;
             // 
             // button6
             // 
@@ -262,13 +269,6 @@
             this.btnCustomLayout.Text = "自定义布局";
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(269, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 1;
             // 
             // FrmMain
             // 

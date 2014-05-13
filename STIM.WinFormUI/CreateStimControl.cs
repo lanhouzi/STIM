@@ -14,27 +14,29 @@ namespace STIM.WinFormUI
         /// 根据类型自动生成的控件
         /// </summary>
         public StimControl AutoStimControl { get; set; }
+
         /// <summary>
         /// 根据DataRow生成控件
         /// </summary>
         /// <param name="row"></param>
+        /// <param name="objValue"></param>
         /// <param name="draggable"></param>
-        public CreateStimControl(DataRow row, bool draggable)
+        public CreateStimControl(DataRow row, Object objValue = null, bool draggable = false)
         {
             string dataType = row["DATA_TYPE"].ToString();
             switch (dataType)
             {
                 case "DATE":
                     DateTimePicker dateTimePicker = new DateTimePicker();
-                    AutoStimControl = CreateStimWfDateTimePicker(dateTimePicker, row, draggable);
+                    AutoStimControl = CreateStimWfDateTimePicker(dateTimePicker, row, objValue, draggable);
                     break;
                 case "NUMBER":
                     NumericUpDown numericUpDown = new NumericUpDown();
-                    AutoStimControl = CreateStimWfNumericUpDown(numericUpDown, row, draggable);
+                    AutoStimControl = CreateStimWfNumericUpDown(numericUpDown, row, objValue, draggable);
                     break;
                 default:
                     TextBox txt = new TextBox();
-                    AutoStimControl = CreateStimWfTextBox(txt, row, draggable);
+                    AutoStimControl = CreateStimWfTextBox(txt, row, objValue, draggable);
                     break;
             }
         }
@@ -42,8 +44,9 @@ namespace STIM.WinFormUI
         /// 根据XML生成控件
         /// </summary>
         /// <param name="xElement"></param>
+        /// <param name="objValue"></param>
         /// <param name="draggable"></param>
-        public CreateStimControl(XElement xElement, bool draggable)
+        public CreateStimControl(XElement xElement, Object objValue = null, bool draggable = false)
         {
             ////获取控件类型 STIM.WinFormUI.ExtControl.StimWfTextBox
             //Type type = Type.GetType((string)xElement.Attribute("ControlType"));
@@ -55,43 +58,43 @@ namespace STIM.WinFormUI
             {
                 case "TextBox":
                     TextBox textBox = new TextBox();
-                    AutoStimControl = CreateStimWfTextBox(textBox, xElement, draggable);
+                    AutoStimControl = CreateStimWfTextBox(textBox, xElement, objValue, draggable);
                     break;
                 case "DateTimePicker":
                     DateTimePicker dateTimePicker = new DateTimePicker();
-                    AutoStimControl = CreateStimWfDateTimePicker(dateTimePicker, xElement, draggable);
+                    AutoStimControl = CreateStimWfDateTimePicker(dateTimePicker, xElement, objValue, draggable);
                     break;
                 case "NumericUpDown":
                     NumericUpDown numericUpDown = new NumericUpDown();
-                    AutoStimControl = CreateStimWfNumericUpDown(numericUpDown, xElement, draggable);
+                    AutoStimControl = CreateStimWfNumericUpDown(numericUpDown, xElement, objValue, draggable);
                     break;
                 case "CheckBox":
                     CheckBox checkBox = new CheckBox();
-                    AutoStimControl = CreateStimWfCheckBox(checkBox, xElement, draggable);
+                    AutoStimControl = CreateStimWfCheckBox(checkBox, xElement, objValue, draggable);
                     break;
                 case "RadioButton":
                     RadioButton radioButton = new RadioButton();
-                    AutoStimControl = CreateStimWfRadioButton(radioButton, xElement, draggable);
+                    AutoStimControl = CreateStimWfRadioButton(radioButton, xElement, objValue, draggable);
                     break;
                 case "ComboBox":
                     ComboBox comboBox = new ComboBox();
-                    AutoStimControl = CreateStimWfComboBox(comboBox, xElement, draggable);
+                    AutoStimControl = CreateStimWfComboBox(comboBox, xElement, objValue, draggable);
                     break;
                 case "CheckedListBox":
                     CheckedListBox checkedListBox = new CheckedListBox();
-                    AutoStimControl = CreateStimWfCheckedListBox(checkedListBox, xElement, draggable);
+                    AutoStimControl = CreateStimWfCheckedListBox(checkedListBox, xElement, objValue, draggable);
                     break;
                 case "ListBox":
                     ListBox listBox = new ListBox();
-                    AutoStimControl = CreateStimWfListBox(listBox, xElement, draggable);
+                    AutoStimControl = CreateStimWfListBox(listBox, xElement, objValue, draggable);
                     break;
                 case "DataGridView":
                     DataGridView dataGridView = new DataGridView();
-                    AutoStimControl = CreateStimWfDataGridView(dataGridView, xElement, draggable);
+                    AutoStimControl = CreateStimWfDataGridView(dataGridView, xElement, objValue, draggable);
                     break;
                 default:
                     TextBox txt = new TextBox();
-                    AutoStimControl = CreateStimWfTextBox(txt, xElement, draggable);
+                    AutoStimControl = CreateStimWfTextBox(txt, xElement, objValue, draggable);
                     break;
             }
         }
@@ -102,15 +105,15 @@ namespace STIM.WinFormUI
         /// 创建Stim控件基类
         /// </summary>
         /// <param name="control"></param>
-        /// <param name="obj"></param>
+        /// <param name="objAttribute"></param>
         /// <returns></returns>
-        private StimControl CreateStimBasic(Control control, Object obj)
+        private StimControl CreateStimBasic(Control control, Object objAttribute)
         {
             StimControl stimControl = null;
             //根据XML生成控件
-            if (obj.GetType().Name.Equals("XElement"))
+            if (objAttribute.GetType().Name.Equals("XElement"))
             {
-                XElement xElement = (XElement)obj;
+                XElement xElement = (XElement)objAttribute;
                 stimControl = new StimControl(control)
                {
                    Name = (string)xElement.Attribute("Column_Name"),
@@ -130,9 +133,9 @@ namespace STIM.WinFormUI
                };
             }
             //根据DataRow生成控件
-            if (obj.GetType().Name.Equals("DataRow"))
+            if (objAttribute.GetType().Name.Equals("DataRow"))
             {
-                DataRow row = (DataRow)obj;
+                DataRow row = (DataRow)objAttribute;
                 stimControl = new StimControl(control)
                 {
                     Name = (string)row["Column_Name"],
@@ -153,15 +156,15 @@ namespace STIM.WinFormUI
         /// 创建Stim TextBox
         /// </summary>
         /// <param name="control"></param>
-        /// <param name="obj"></param>
+        /// <param name="objAttribute"></param>
+        /// <param name="objValue"></param>
         /// <param name="draggable"></param>
         /// <returns></returns>
-        private StimControl CreateStimWfTextBox(TextBox control, Object obj, bool draggable)
+        private StimControl CreateStimWfTextBox(TextBox control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.Text = "test";
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.Text = "test";
+            //control.Text = objValue.Equals(null) ? "" : (string)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
@@ -172,99 +175,92 @@ namespace STIM.WinFormUI
         /// 创建Stim DateTimePicker
         /// </summary>
         /// <param name="control"></param>
-        /// <param name="obj"></param>
+        /// <param name="objAttribute"></param>
+        /// <param name="objValue"></param>
         /// <param name="draggable"></param>
         /// <returns></returns>
-        private StimControl CreateStimWfDateTimePicker(DateTimePicker control, Object obj, bool draggable)
+        private StimControl CreateStimWfDateTimePicker(DateTimePicker control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.Value = DateTime.Now.AddDays();
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.Value = DateTime.Now.AddDays();
+            //control.Value = objValue.Equals(null) ? DateTime.Now : (DateTime)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfNumericUpDown(NumericUpDown control, Object obj, bool draggable)
+        private StimControl CreateStimWfNumericUpDown(NumericUpDown control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.Value = 1;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.Value = 1;
+            //control.Value = objValue.Equals(null) ? 0 : (decimal)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfCheckBox(CheckBox control, Object obj, bool draggable)
+        private StimControl CreateStimWfCheckBox(CheckBox control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.Checked = true;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.Checked = true;
+            //control.Checked = !objValue.Equals(null) && (bool)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfRadioButton(RadioButton control, Object obj, bool draggable)
+        private StimControl CreateStimWfRadioButton(RadioButton control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.Checked = true;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.Checked = true;
+            //control.Checked = !objValue.Equals(null) && (bool)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfComboBox(ComboBox control, Object obj, bool draggable)
+        private StimControl CreateStimWfComboBox(ComboBox control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.DropDownStyle = ComboBoxStyle.DropDownList;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.DropDownStyle = ComboBoxStyle.DropDownList;
+            //control.SelectedText = (string)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfCheckedListBox(CheckedListBox control, Object obj, bool draggable)
+        private StimControl CreateStimWfCheckedListBox(CheckedListBox control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.SelectionMode = SelectionMode.MultiExtended;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.SelectionMode = SelectionMode.MultiExtended;
+            //control.Text = (string)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfListBox(ListBox control, Object obj, bool draggable)
+        private StimControl CreateStimWfListBox(ListBox control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.SelectionMode = SelectionMode.One;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.SelectionMode = SelectionMode.One;
+            //control.Text = (string)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();
             return stimControl;
         }
 
-        private StimControl CreateStimWfDataGridView(DataGridView control, Object obj, bool draggable)
+        private StimControl CreateStimWfDataGridView(DataGridView control, Object objAttribute, Object objValue, bool draggable)
         {
-            //
-            //TODO 数据空间的处理操作 control.AutoSize = true;
-            //
-            StimControl stimControl = CreateStimBasic(control, obj);
+            //TODO 数据控件的处理操作 control.AutoSize = true;
+            //control.DataSource = objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
             stimControl.BringToFront();

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using STIM.Utilities;
-using STIM.WinFormUI.ExtControl;
 using System.Xml.Linq;
 
 namespace STIM.WinFormUI
@@ -88,9 +85,9 @@ namespace STIM.WinFormUI
                 }
             }
         }
-        public void CreatStimControl(DataRow row, bool draggable = false)
+        public void CreatStimControl(DataRow row, bool draggable)
         {
-            CreateStimControl stimControl = new CreateStimControl(row, draggable);
+            CreateStimControl stimControl = new CreateStimControl(row, null, draggable);
             stimControl.AutoStimControl.Location = new Point(20 + _layoutColumn * 300, 10 + _layoutRow * 35);
             //只对更新操作生效
             //if (VoidNameEnum.Update == VoidName && null != DGVR)
@@ -108,13 +105,11 @@ namespace STIM.WinFormUI
             ////注册按钮点击事件
             //stimControl.AutoStimControl.Click += delegate { propertyGrid1.SelectedObject = stimControl.AutoStimControl.dataFile; };
             tabPageDetail.Controls.Add(stimControl.AutoStimControl);
-            
-        }
-        public void CreatStimControl(XElement xElement, bool draggable = false)
-        {
-            //获取控件类型
-            CreateStimControl stimControl = new CreateStimControl(xElement,draggable);
 
+        }
+        public void CreatStimControl(XElement xElement, bool draggable)
+        {
+            CreateStimControl stimControl = new CreateStimControl(xElement, null, draggable);
             tabPageDetail.Controls.Add(stimControl.AutoStimControl);
         }
 
@@ -158,7 +153,7 @@ namespace STIM.WinFormUI
                 XElement xEle =
                     new XElement("Column",
                         new XAttribute("Column_Name", control.Name),
-                        //new XAttribute("ControlType", control.GetType().ToString()),
+                    //new XAttribute("ControlType", control.GetType().ToString()),
                         new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
                         new XAttribute("Enabled", control.Enabled.ToString()),
