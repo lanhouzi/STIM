@@ -31,23 +31,27 @@
             this.grpAction = new System.Windows.Forms.GroupBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.grpData = new System.Windows.Forms.GroupBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.pnlData = new System.Windows.Forms.Panel();
             this.grpAction.SuspendLayout();
+            this.grpData.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpAction
             // 
+            this.grpAction.Controls.Add(this.btnClose);
             this.grpAction.Controls.Add(this.btnSave);
             this.grpAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpAction.Location = new System.Drawing.Point(0, 361);
+            this.grpAction.Location = new System.Drawing.Point(0, 411);
             this.grpAction.Name = "grpAction";
-            this.grpAction.Size = new System.Drawing.Size(734, 100);
+            this.grpAction.Size = new System.Drawing.Size(734, 50);
             this.grpAction.TabIndex = 0;
             this.grpAction.TabStop = false;
             this.grpAction.Text = "操作区域";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(35, 21);
+            this.btnSave.Location = new System.Drawing.Point(82, 20);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -58,13 +62,33 @@
             // 
             this.grpData.AutoSize = true;
             this.grpData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.grpData.Controls.Add(this.pnlData);
             this.grpData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpData.Location = new System.Drawing.Point(0, 0);
             this.grpData.Name = "grpData";
-            this.grpData.Size = new System.Drawing.Size(734, 361);
+            this.grpData.Size = new System.Drawing.Size(734, 411);
             this.grpData.TabIndex = 1;
             this.grpData.TabStop = false;
             this.grpData.Text = "数据表单";
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(163, 20);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 0;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // pnlData
+            // 
+            this.pnlData.AutoScroll = true;
+            this.pnlData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlData.Location = new System.Drawing.Point(3, 17);
+            this.pnlData.Name = "pnlData";
+            this.pnlData.Size = new System.Drawing.Size(728, 391);
+            this.pnlData.TabIndex = 0;
             // 
             // FrmDetailView
             // 
@@ -77,6 +101,7 @@
             this.Text = "FrmDetailView";
             this.Load += new System.EventHandler(this.FrmDetailView_Load);
             this.grpAction.ResumeLayout(false);
+            this.grpData.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -87,5 +112,7 @@
         private System.Windows.Forms.GroupBox grpAction;
         private System.Windows.Forms.GroupBox grpData;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Panel pnlData;
     }
 }

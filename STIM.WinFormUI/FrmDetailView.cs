@@ -12,7 +12,15 @@ namespace STIM.WinFormUI
 {
     public partial class FrmDetailView : Form
     {
+        /// <summary>
+        /// 新增or修改
+        /// </summary>
+        string AddOrModify = "Add";
+        /// <summary>
+        /// 表名
+        /// </summary>
         string TableName = "";
+
         DataGridViewRow DgvRow = new DataGridViewRow();
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
         Model.STIM_CONFIG _model = new Model.STIM_CONFIG();
@@ -22,9 +30,10 @@ namespace STIM.WinFormUI
             InitializeComponent();
         }
 
-        public FrmDetailView(string tableName, DataGridViewRow dgvRow)
+        public FrmDetailView(string addOrModify, string tableName, DataGridViewRow dgvRow = null)
             : this()
         {
+            AddOrModify = addOrModify;
             TableName = tableName;
             DgvRow = dgvRow;
         }
@@ -41,8 +50,16 @@ namespace STIM.WinFormUI
                 IEnumerable<XElement> xElements = xDoc.Root.Elements().Select(el => el);
                 foreach (XElement item in xElements)
                 {
-                    CreateStimControl stimControl = new CreateStimControl(item);
-                    grpData.Controls.Add(stimControl.AutoStimControl);
+                    //字段名
+                    var columnName = (string)item.Attribute("Column_Name");
+                    //字段值
+                    object columnValue = null;
+                    if (AddOrModify == "Add")
+                    {
+                        columnValue = DgvRow.Cells[columnName].Value;
+                    }
+                    CreateStimControl stimControl = new CreateStimControl(item, columnValue);
+                    pnlData.Controls.Add(stimControl.AutoStimControl);
                 }
 
             }
@@ -50,6 +67,11 @@ namespace STIM.WinFormUI
             {
                 MessageBox.Show("尚未对表【" + TableName + "】进行自定义配置，请新增该表的自定义配置！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

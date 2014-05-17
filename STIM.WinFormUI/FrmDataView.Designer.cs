@@ -32,13 +32,13 @@
             this.grpSearch = new System.Windows.Forms.GroupBox();
             this.grpData = new System.Windows.Forms.GroupBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.rowChecker = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsMenuAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuModify = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.tsMenuRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.rowCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.grpData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -67,17 +67,32 @@
             // 
             // dgvData
             // 
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.AllowUserToOrderColumns = true;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.rowCheck});
+            this.rowChecker});
+            this.dgvData.ContextMenuStrip = this.contextMenuStrip;
             this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvData.Location = new System.Drawing.Point(3, 17);
             this.dgvData.Name = "dgvData";
+            this.dgvData.ReadOnly = true;
             this.dgvData.RowHeadersWidth = 30;
             this.dgvData.RowTemplate.Height = 23;
             this.dgvData.Size = new System.Drawing.Size(728, 341);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
+            // 
+            // rowChecker
+            // 
+            this.rowChecker.Frozen = true;
+            this.rowChecker.HeaderText = "";
+            this.rowChecker.MinimumWidth = 30;
+            this.rowChecker.Name = "rowChecker";
+            this.rowChecker.ReadOnly = true;
+            this.rowChecker.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.rowChecker.Width = 30;
             // 
             // contextMenuStrip
             // 
@@ -88,44 +103,40 @@
             this.tsSeparator,
             this.tsMenuRefresh});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(101, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(153, 120);
             // 
             // tsMenuAdd
             // 
             this.tsMenuAdd.Name = "tsMenuAdd";
-            this.tsMenuAdd.Size = new System.Drawing.Size(100, 22);
+            this.tsMenuAdd.Size = new System.Drawing.Size(152, 22);
             this.tsMenuAdd.Text = "新增";
+            this.tsMenuAdd.Click += new System.EventHandler(this.tsMenuAdd_Click);
             // 
             // tsMenuModify
             // 
             this.tsMenuModify.Name = "tsMenuModify";
-            this.tsMenuModify.Size = new System.Drawing.Size(100, 22);
+            this.tsMenuModify.Size = new System.Drawing.Size(152, 22);
             this.tsMenuModify.Text = "修改";
+            this.tsMenuModify.Click += new System.EventHandler(this.tsMenuModify_Click);
             // 
             // tsMenuDelete
             // 
             this.tsMenuDelete.Name = "tsMenuDelete";
-            this.tsMenuDelete.Size = new System.Drawing.Size(100, 22);
+            this.tsMenuDelete.Size = new System.Drawing.Size(152, 22);
             this.tsMenuDelete.Text = "删除";
+            this.tsMenuDelete.Click += new System.EventHandler(this.tsMenuDelete_Click);
             // 
             // tsSeparator
             // 
             this.tsSeparator.Name = "tsSeparator";
-            this.tsSeparator.Size = new System.Drawing.Size(97, 6);
+            this.tsSeparator.Size = new System.Drawing.Size(149, 6);
             // 
             // tsMenuRefresh
             // 
             this.tsMenuRefresh.Name = "tsMenuRefresh";
-            this.tsMenuRefresh.Size = new System.Drawing.Size(100, 22);
+            this.tsMenuRefresh.Size = new System.Drawing.Size(152, 22);
             this.tsMenuRefresh.Text = "刷新";
-            // 
-            // rowCheck
-            // 
-            this.rowCheck.Frozen = true;
-            this.rowCheck.HeaderText = "";
-            this.rowCheck.MinimumWidth = 30;
-            this.rowCheck.Name = "rowCheck";
-            this.rowCheck.Width = 30;
+            this.tsMenuRefresh.Click += new System.EventHandler(this.tsMenuRefresh_Click);
             // 
             // FrmDataView
             // 
@@ -136,6 +147,7 @@
             this.Controls.Add(this.grpSearch);
             this.Name = "FrmDataView";
             this.Text = "FrmDataView";
+            this.Load += new System.EventHandler(this.FrmDataView_Load);
             this.grpData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
@@ -154,6 +166,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsMenuDelete;
         private System.Windows.Forms.ToolStripSeparator tsSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsMenuRefresh;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn rowCheck;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn rowChecker;
     }
 }

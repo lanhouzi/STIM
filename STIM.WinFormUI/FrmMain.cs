@@ -89,12 +89,6 @@ namespace STIM.WinFormUI
         {
             CreateStimControl stimControl = new CreateStimControl(row, null, draggable);
             stimControl.AutoStimControl.Location = new Point(20 + _layoutColumn * 300, 10 + _layoutRow * 35);
-            //只对更新操作生效
-            //if (VoidNameEnum.Update == VoidName && null != DGVR)
-            //{
-            //    //给文本框绑定值
-            //    MakeTxt.Text = DGVR.Cells[row["COLUMN_NAME"].ToString()].Value.ToString();
-            //}
             //只读属性，通过是否主键判断 Y:是，N:否
             if ("Y" == row["ISPK"].ToString())
             {

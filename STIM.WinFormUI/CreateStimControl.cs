@@ -163,7 +163,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfTextBox(TextBox control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Text = "test";
-            //control.Text = objValue.Equals(null) ? "" : (string)objValue;
+            control.Text = objValue==null? "" : (string)objValue;
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -182,7 +182,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfDateTimePicker(DateTimePicker control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Value = DateTime.Now.AddDays();
-            //control.Value = objValue.Equals(null) ? DateTime.Now : (DateTime)objValue;
+            //control.Value = objValue==null? DateTime.Now : (DateTime)objValue;
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -193,7 +193,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfNumericUpDown(NumericUpDown control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Value = 1;
-            //control.Value = objValue.Equals(null) ? 0 : (decimal)objValue;
+            control.Value = objValue==null? 0 : (decimal)objValue;
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -204,7 +204,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfCheckBox(CheckBox control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Checked = true;
-            //control.Checked = !objValue.Equals(null) && (bool)objValue;
+            //control.Checked = !objValue==null&& (bool)objValue;
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -215,7 +215,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfRadioButton(RadioButton control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Checked = true;
-            //control.Checked = !objValue.Equals(null) && (bool)objValue;
+            //control.Checked = !objValue==null&& (bool)objValue;
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
