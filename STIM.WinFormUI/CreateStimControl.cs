@@ -163,7 +163,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfTextBox(TextBox control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Text = "test";
-            control.Text = objValue==null? "" : (string)objValue;
+            control.Text = objValue == null ? "" : (objValue.ToString() == "" ? "" : objValue.ToString());
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -182,7 +182,7 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfDateTimePicker(DateTimePicker control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Value = DateTime.Now.AddDays();
-            //control.Value = objValue==null? DateTime.Now : (DateTime)objValue;
+            control.Value = objValue == null ? DateTime.Now : (objValue.ToString() == "" ? DateTime.Now : (DateTime)objValue);
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
@@ -193,7 +193,9 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfNumericUpDown(NumericUpDown control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Value = 1;
-            control.Value = objValue==null? 0 : (decimal)objValue;
+            control.Maximum = decimal.MaxValue;
+            control.DecimalPlaces = 2;
+            control.Value = objValue == null ? 0 : (objValue.ToString() == "" ? 0 : decimal.Parse(objValue.ToString()));
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);

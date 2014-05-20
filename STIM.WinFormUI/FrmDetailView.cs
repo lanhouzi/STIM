@@ -40,33 +40,42 @@ namespace STIM.WinFormUI
 
         private void FrmDetailView_Load(object sender, EventArgs e)
         {
-            //_model = _bll.GetModel(TableName);
-            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
-
-            //按照自定义配置布局控件
-            if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
+            try
             {
-                XDocument xDoc = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
-                IEnumerable<XElement> xElements = xDoc.Root.Elements().Select(el => el);
-                foreach (XElement item in xElements)
+                //_model = _bll.GetModel(TableName);
+                _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+
+                //按照自定义配置布局控件
+                if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
                 {
-                    //字段名
-                    var columnName = (string)item.Attribute("Column_Name");
-                    //字段值
-                    object columnValue = null;
-                    if (AddOrModify == "Add")
+                    XDocument xDoc = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
+                    IEnumerable<XElement> xElements = xDoc.Root.Elements().Select(el => el);
+                    foreach (XElement item in xElements)
                     {
-                        columnValue = DgvRow.Cells[columnName].Value;
+                        //字段名
+                        var columnName = (string)item.Attribute("Column_Name");
+                        //字段值
+                        object columnValue = null;
+                        if (AddOrModify == "Modify")
+                        {
+                            columnValue = DgvRow.Cells[columnName].Value;
+                        }
+                        CreateStimControl stimControl = new CreateStimControl(item, columnValue);
+                        pnlData.Controls.Add(stimControl.AutoStimControl);
                     }
-                    CreateStimControl stimControl = new CreateStimControl(item, columnValue);
-                    pnlData.Controls.Add(stimControl.AutoStimControl);
-                }
 
+                }
+                else
+                {
+                    MessageBox.Show("尚未对表【" + TableName + "】进行自定义配置，请新增该表的自定义配置！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("尚未对表【" + TableName + "】进行自定义配置，请新增该表的自定义配置！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                throw ex;
             }
+            
         }
 
         private void btnClose_Click(object sender, EventArgs e)

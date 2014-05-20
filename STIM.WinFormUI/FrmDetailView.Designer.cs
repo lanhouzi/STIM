@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.grpAction = new System.Windows.Forms.GroupBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.grpData = new System.Windows.Forms.GroupBox();
-            this.btnClose = new System.Windows.Forms.Button();
             this.pnlData = new System.Windows.Forms.Panel();
             this.grpAction.SuspendLayout();
             this.grpData.SuspendLayout();
@@ -48,6 +48,16 @@
             this.grpAction.TabIndex = 0;
             this.grpAction.TabStop = false;
             this.grpAction.Text = "操作区域";
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(163, 20);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 0;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -71,16 +81,6 @@
             this.grpData.TabStop = false;
             this.grpData.Text = "数据表单";
             // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(163, 20);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 0;
-            this.btnClose.Text = "关闭";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // pnlData
             // 
             this.pnlData.AutoScroll = true;
@@ -98,6 +98,7 @@
             this.Controls.Add(this.grpData);
             this.Controls.Add(this.grpAction);
             this.Name = "FrmDetailView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmDetailView";
             this.Load += new System.EventHandler(this.FrmDetailView_Load);
             this.grpAction.ResumeLayout(false);

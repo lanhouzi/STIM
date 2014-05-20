@@ -308,7 +308,7 @@ namespace STIM.OracleDAL
         /// <summary>
         /// 获取表信息（字段名称、数据类型、长度、精度、是否为空、默认值、字段说明）
         /// </summary>
-        public DataSet GetTableInformation(string TableName)
+        public DataSet GetTableInformation(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             //strSql.Append("select T.COLUMN_NAME,T.DATA_TYPE,T.DATA_PRECISION,T.DATA_SCALE,T.NULLABLE,T.DATA_DEFAULT,C.COMMENTS");
@@ -326,7 +326,7 @@ namespace STIM.OracleDAL
  AND AA.INDEX_NAME = BB.CONSTRAINT_NAME AND AA.TABLE_NAME IN (upper('{0}'))) PKCOL
  WHERE T.TABLE_NAME = C.TABLE_NAME AND T.COLUMN_NAME = C.COLUMN_NAME
  AND T.TABLE_NAME =upper('{1}') AND T.COLUMN_NAME = PKCOL.COLUMN_NAME(+)
- AND T.TABLE_NAME = PKCOL.TABLE_NAME(+) ORDER BY T.COLUMN_ID", TableName, TableName);
+ AND T.TABLE_NAME = PKCOL.TABLE_NAME(+) ORDER BY T.COLUMN_ID", tableName, tableName);
 
             //DataTable dt = new DataTable();
             //System.Data.OleDb.OleDbConnection conn1 = new System.Data.OleDb.OleDbConnection();
@@ -341,11 +341,27 @@ namespace STIM.OracleDAL
             return ora.Query(strSql.ToString());
         }
         /// <summary>
+        /// 根据表名和查询条件获取表数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="strWhere">查询条件</param>
+        /// <returns></returns>
+        public DataSet GetDataList(string tableName, string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * from " + tableName);
+            if (!string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return ora.Query(strSql.ToString());
+        }
+        /// <summary>
         /// 得到表配置（查询条件，显示列）
         /// </summary>
-        /// <param name="TableName">表名</param>
+        /// <param name="tableName">表名</param>
         /// <returns></returns>
-        public DataSet TableConfig(string TableName)
+        public DataSet TableConfig(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
 
@@ -355,7 +371,7 @@ namespace STIM.OracleDAL
  case when instr(C.COMMENTS,'$')>0 THEN 'Y' ELSE 'N' END AS IsViewColumn
  from user_tab_columns T inner join user_col_comments C
  on T.table_name=C.table_name and T.column_name=C.column_name
- where T.table_name =upper('{0}') order by T.column_id", TableName);
+ where T.table_name =upper('{0}') order by T.column_id", tableName);
 
             return ora.Query(strSql.ToString());
         }

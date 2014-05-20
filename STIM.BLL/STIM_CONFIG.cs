@@ -135,10 +135,21 @@ namespace STIM.BLL
         /// <summary>
         /// 获取表信息（字段名称、数据类型、长度、精度、是否为空、默认值、字段说明）
         /// </summary>
-        public DataSet GetTableInformation(string TableName)
+        public DataSet GetTableInformation(string tableName)
         {
-            return dal.GetTableInformation(TableName);
+            return dal.GetTableInformation(tableName);
         }
+        /// <summary>
+        /// 根据表名和查询条件获取表数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="strWhere">查询条件</param>
+        /// <returns></returns>
+        public DataSet GetDataList(string tableName, string strWhere)
+        {
+            return dal.GetDataList(tableName, strWhere);
+        }
+
         #endregion  ExtensionMethod
     }
 }

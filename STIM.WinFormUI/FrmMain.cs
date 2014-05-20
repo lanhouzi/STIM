@@ -61,7 +61,7 @@ namespace STIM.WinFormUI
                 XDocument xDoc = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
                 ////Linq to XML
                 //IEnumerable<XNode> xNodes = from nd in xDoc.Root.Nodes() select nd;
-                //Linq,Lambda
+                //Lambda
                 IEnumerable<XElement> xElements = xDoc.Root.Elements().Select(el => el);
                 foreach (XElement item in xElements)
                 {

@@ -49,7 +49,14 @@ namespace STIM.IDAL
         /// <summary>
         /// 获取表信息（字段名称、数据类型、长度、精度、是否为空、默认值、字段说明）
         /// </summary>
-        DataSet GetTableInformation(string TableName);
+        DataSet GetTableInformation(string tableName);
+        /// <summary>
+        /// 根据表名和查询条件获取表数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="strWhere">查询条件</param>
+        /// <returns></returns>
+        DataSet GetDataList(string tableName, string strWhere);
 
         #endregion  MethodEx
     }
