@@ -59,7 +59,9 @@ namespace STIM.WinFormUI
                         Name = (string)row["Column_Name".ToUpper()],
                         HeaderText = (string)row["Column_Name".ToUpper()],
                         DataPropertyName = (string)row["Column_Name".ToUpper()],
-                        ReadOnly = true
+                        ReadOnly = true,
+                        //主键
+                        Tag = row["ISPK"].ToString().Equals("Y") ? "ISPK" : ""
                     };
                     dgvData.Columns.Add(dgvCol);
                 }
@@ -102,7 +104,32 @@ namespace STIM.WinFormUI
 
         private void tsMenuDelete_Click(object sender, EventArgs e)
         {
-            LoadData();
+            DialogResult resault = MessageBox.Show("确定要删除选中的记录吗？", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (resault == DialogResult.OK)
+            {
+                StringBuilder sbDeleteWhere = new StringBuilder();
+                StringBuilder sbDeleteValue = new StringBuilder();
+                //foreach (string item in ISPKColumnList)
+                //{
+                //    sbDeleteWhere.Append("||" + item);
+                //}
+                //sbDeleteWhere.Remove(0, 2);//移出头部的||
+
+                //foreach (DataGridViewRow dgvr in dgvData.Rows)
+                //{
+                //    DataGridViewCheckBoxCell dgvckbex = (DataGridViewCheckBoxCell)dgvr.Cells["rowChecker"];
+                //    if (dgvckbex.Selected)
+                //    {
+                //        sbDeleteValue.Append(",'");
+                //        foreach (string item in ISPKColumnList)
+                //        {
+                //            sbDeleteValue.Append(dgvr.Cells[item].Value.ToString());
+                //        }
+                //        sbDeleteValue.Append("'");
+                //    }
+                //}
+                LoadData();
+            }
         }
 
         private void tsMenuRefresh_Click(object sender, EventArgs e)

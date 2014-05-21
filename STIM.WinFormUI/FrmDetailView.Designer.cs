@@ -42,9 +42,9 @@
             this.grpAction.Controls.Add(this.btnClose);
             this.grpAction.Controls.Add(this.btnSave);
             this.grpAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpAction.Location = new System.Drawing.Point(0, 411);
+            this.grpAction.Location = new System.Drawing.Point(0, 511);
             this.grpAction.Name = "grpAction";
-            this.grpAction.Size = new System.Drawing.Size(734, 50);
+            this.grpAction.Size = new System.Drawing.Size(899, 50);
             this.grpAction.TabIndex = 0;
             this.grpAction.TabStop = false;
             this.grpAction.Text = "操作区域";
@@ -67,6 +67,7 @@
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // grpData
             // 
@@ -76,7 +77,7 @@
             this.grpData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpData.Location = new System.Drawing.Point(0, 0);
             this.grpData.Name = "grpData";
-            this.grpData.Size = new System.Drawing.Size(734, 411);
+            this.grpData.Size = new System.Drawing.Size(899, 511);
             this.grpData.TabIndex = 1;
             this.grpData.TabStop = false;
             this.grpData.Text = "数据表单";
@@ -87,14 +88,14 @@
             this.pnlData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlData.Location = new System.Drawing.Point(3, 17);
             this.pnlData.Name = "pnlData";
-            this.pnlData.Size = new System.Drawing.Size(728, 391);
+            this.pnlData.Size = new System.Drawing.Size(893, 491);
             this.pnlData.TabIndex = 0;
             // 
             // FrmDetailView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 461);
+            this.ClientSize = new System.Drawing.Size(899, 561);
             this.Controls.Add(this.grpData);
             this.Controls.Add(this.grpAction);
             this.Name = "FrmDetailView";

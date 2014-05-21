@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using System.Collections.Generic;
+using Oracle.ManagedDataAccess.Client;
 using STIM.IDAL;
 using System;
 using System.Data;
@@ -355,6 +356,108 @@ namespace STIM.OracleDAL
                 strSql.Append(" where " + strWhere);
             }
             return ora.Query(strSql.ToString());
+        }
+        /// <summary>
+        /// 新增数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="dictColumns">列字典</param>
+        /// <returns></returns>
+        public bool AddData(string tableName, Dictionary<string, object> dictColumns)
+        {
+            StringBuilder strSql = new StringBuilder("insert into " + tableName);
+            StringBuilder sbColumns = new StringBuilder(" (");
+            StringBuilder sbValues = new StringBuilder(" values (");
+            OracleParameter[] parameters = { };
+            //OracleParameter[] parameters = { 
+            //        new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2),
+            //        new OracleParameter(":SEARCH_FORM_XML", OracleDbType.NClob),
+            //        new OracleParameter(":DETAIL_FORM_XML", OracleDbType.NClob),
+            //        new OracleParameter(":DATAGRIDVIEW_XML", OracleDbType.NClob),
+            //        new OracleParameter(":REMARK", OracleDbType.Varchar2)};
+            //parameters[0].Value = model.TABLE_NAME;
+            //parameters[1].Value = model.SEARCH_FORM_XML;
+            //parameters[2].Value = model.DETAIL_FORM_XML;
+            //parameters[3].Value = model.DATAGRIDVIEW_XML;
+            //parameters[4].Value = model.REMARK;
+
+            foreach (var item in dictColumns)
+            {
+                sbColumns.Append("," + item.Key);
+                sbValues.Append(",:" + item.Key);
+                OracleDbType odbType;
+                if (item.Value.GetType().Name == "String")
+                    odbType = OracleDbType.Varchar2;
+                else if (item.Value.GetType().Name == "DateTime")
+                    odbType = OracleDbType.Date;
+                else
+                    odbType = OracleDbType.Decimal;
+                OracleParameter[] p = { new OracleParameter(":" + item.Key, odbType) };
+                p[0].Value = item.Value;
+                p.CopyTo(parameters, parameters.Length);
+            }
+            sbColumns.Append(")");
+            sbValues.Append(")");
+            strSql.Append(sbColumns.ToString().TrimStart(','));
+            strSql.Append(sbValues.ToString().TrimStart(','));
+
+            int rows = ora.ExecuteSql(strSql.ToString(), parameters);
+            return rows > 0;
+        }
+        /// <summary>
+        /// 更新一条数据
+        /// </summary>
+        public bool UpdateData(STIM.Model.STIM_CONFIG model)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update STIM_CONFIG set ");
+            strSql.Append("SEARCH_FORM_XML=:SEARCH_FORM_XML,DETAIL_FORM_XML=:DETAIL_FORM_XML,DATAGRIDVIEW_XML=:DATAGRIDVIEW_XML,REMARK=:REMARK");
+            strSql.Append(" where TABLE_NAME=:TABLE_NAME");
+
+            OracleParameter[] parameters = {
+                    new OracleParameter(":SEARCH_FORM_XML", OracleDbType.NClob),
+                    new OracleParameter(":DETAIL_FORM_XML", OracleDbType.NClob),
+                    new OracleParameter(":DATAGRIDVIEW_XML", OracleDbType.NClob),
+                    new OracleParameter(":REMARK", OracleDbType.Varchar2),
+                    new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2)};
+
+            parameters[0].Value = model.SEARCH_FORM_XML;
+            parameters[1].Value = model.DETAIL_FORM_XML;
+            parameters[2].Value = model.DATAGRIDVIEW_XML;
+            parameters[3].Value = model.REMARK;
+            parameters[4].Value = model.TABLE_NAME;
+
+            int rows = ora.ExecuteSql(strSql.ToString(), parameters);
+            return rows > 0;
+        }
+
+        /// <summary>
+        /// 删除一条数据
+        /// </summary>
+        public bool DeleteData(string tableName, string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder("delete from " + tableName);
+            if (string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" where " + strWhere);
+                int rows = ora.ExecuteSql(strSql.ToString());
+                return rows > 0;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        public bool DeleteDataList(string tableName, string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder("delete from " + tableName);
+            if (string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" where " + strWhere);
+                int rows = ora.ExecuteSql(strSql.ToString());
+                return rows > 0;
+            }
+            return false;
         }
         /// <summary>
         /// 得到表配置（查询条件，显示列）

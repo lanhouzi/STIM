@@ -150,6 +150,16 @@ namespace STIM.BLL
             return dal.GetDataList(tableName, strWhere);
         }
 
+        /// <summary>
+        /// 新增数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="dictColumns">列字典</param>
+        /// <returns></returns>
+        public bool AddData(string tableName, Dictionary<string, object> dictColumns)
+        {
+            return dal.AddData(tableName, dictColumns);
+        }
         #endregion  ExtensionMethod
     }
 }

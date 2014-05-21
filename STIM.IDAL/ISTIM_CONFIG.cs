@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace STIM.IDAL
 {
@@ -57,6 +58,13 @@ namespace STIM.IDAL
         /// <param name="strWhere">查询条件</param>
         /// <returns></returns>
         DataSet GetDataList(string tableName, string strWhere);
+        /// <summary>
+        /// 新增数据
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="dictColumns">列字典</param>
+        /// <returns></returns>
+        bool AddData(string tableName, Dictionary<string, object> dictColumns);
 
         #endregion  MethodEx
     }
