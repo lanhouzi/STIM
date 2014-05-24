@@ -16,6 +16,7 @@ namespace STIM.WinFormUI
         /// 表名
         /// </summary>
         string TableName = "GOODS_EXT";
+        List<string> IsPkList = new List<string>();
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
         Model.STIM_CONFIG _model = new Model.STIM_CONFIG();
 
@@ -61,9 +62,14 @@ namespace STIM.WinFormUI
                         DataPropertyName = (string)row["Column_Name".ToUpper()],
                         ReadOnly = true,
                         //主键
-                        Tag = row["ISPK"].ToString().Equals("Y") ? "ISPK" : ""
+                        //Tag = row["ISPK"].ToString().Equals("Y") ? "ISPK" : ""
                     };
                     dgvData.Columns.Add(dgvCol);
+
+                    if (row["ISPK"].ToString().Equals("Y"))
+                    {
+                        IsPkList.Add(dgvCol.Name);
+                    }
                 }
             }
             LoadData();
@@ -109,8 +115,21 @@ namespace STIM.WinFormUI
             {
                 StringBuilder sbDeleteWhere = new StringBuilder();
                 StringBuilder sbDeleteValue = new StringBuilder();
-                //foreach (string item in ISPKColumnList)
+                foreach ( DataGridViewRow row in dgvData.Rows)
+                {
+                    //选中的行
+                    if(((DataGridViewCheckBoxCell)row.Cells["rowChecker"]).Selected)
+                    {
+                        
+                    }
+                }
+                //foreach (DataGridViewColumn item in dgvData.Columns)
                 //{
+
+                //    if (Equals(item.Tag, "ISPK"))
+                //    {
+                //        sbDeleteWhere.AppendFormat (item.Name='{0}')
+                //    }
                 //    sbDeleteWhere.Append("||" + item);
                 //}
                 //sbDeleteWhere.Remove(0, 2);//移出头部的||

@@ -197,6 +197,12 @@ namespace STIM.WinFormUI
             return xml.XmlString;
         }
 
+        private void btnGoodsExt_Click(object sender, EventArgs e)
+        {
+            FrmDataView frm = new FrmDataView();
+            frm.Show();
+        }
+
 
     }
 }

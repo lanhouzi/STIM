@@ -92,6 +92,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RowHeadersWidth = 30;
             this.dgvData.RowTemplate.Height = 23;
+            this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(728, 341);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);

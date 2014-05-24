@@ -16,7 +16,7 @@ namespace STIM.WinFormUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmDataView());
+            Application.Run(new FrmMain());
         }
     }
 }

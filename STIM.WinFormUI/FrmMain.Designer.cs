@@ -43,11 +43,10 @@
             this.grpLeft = new System.Windows.Forms.GroupBox();
             this.tvSingleTableList = new System.Windows.Forms.TreeView();
             this.grpBottom = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnGoodsExt = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
@@ -192,11 +191,10 @@
             // 
             // grpBottom
             // 
-            this.grpBottom.Controls.Add(this.textBox1);
             this.grpBottom.Controls.Add(this.button6);
             this.grpBottom.Controls.Add(this.button5);
             this.grpBottom.Controls.Add(this.button4);
-            this.grpBottom.Controls.Add(this.button3);
+            this.grpBottom.Controls.Add(this.btnGoodsExt);
             this.grpBottom.Controls.Add(this.btnSaveConfig);
             this.grpBottom.Controls.Add(this.btnCustomLayout);
             this.grpBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -206,13 +204,6 @@
             this.grpBottom.TabIndex = 9;
             this.grpBottom.TabStop = false;
             this.grpBottom.Text = "操作区域";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(269, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 1;
             // 
             // button6
             // 
@@ -241,14 +232,15 @@
             this.button4.Text = "button1";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnGoodsExt
             // 
-            this.button3.Location = new System.Drawing.Point(188, 20);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "button1";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnGoodsExt.Location = new System.Drawing.Point(188, 20);
+            this.btnGoodsExt.Name = "btnGoodsExt";
+            this.btnGoodsExt.Size = new System.Drawing.Size(75, 23);
+            this.btnGoodsExt.TabIndex = 0;
+            this.btnGoodsExt.Text = "GOODS_EXT";
+            this.btnGoodsExt.UseVisualStyleBackColor = true;
+            this.btnGoodsExt.Click += new System.EventHandler(this.btnGoodsExt_Click);
             // 
             // btnSaveConfig
             // 
@@ -295,7 +287,6 @@
             this.grpRight.ResumeLayout(false);
             this.grpLeft.ResumeLayout(false);
             this.grpBottom.ResumeLayout(false);
-            this.grpBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,7 +304,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnGoodsExt;
         private System.Windows.Forms.Button btnSaveConfig;
         private System.Windows.Forms.Button btnCustomLayout;
         private System.Windows.Forms.TabControl tabMain;
@@ -323,7 +314,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.TextBox textBox1;
 
     }
 }
