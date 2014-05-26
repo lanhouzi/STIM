@@ -120,7 +120,7 @@ namespace STIM.WinFormUI
                     //选中的行
                     if(((DataGridViewCheckBoxCell)row.Cells["rowChecker"]).Selected)
                     {
-                        
+                        //row.
                     }
                 }
                 //foreach (DataGridViewColumn item in dgvData.Columns)
