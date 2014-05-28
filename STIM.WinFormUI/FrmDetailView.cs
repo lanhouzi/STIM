@@ -20,6 +20,10 @@ namespace STIM.WinFormUI
         /// 表名
         /// </summary>
         string TableName = "";
+        /// <summary>
+        /// 主键
+        /// </summary>
+        List<string> PkList = new List<string>();
 
         DataGridViewRow DgvRow = new DataGridViewRow();
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
@@ -30,11 +34,12 @@ namespace STIM.WinFormUI
             InitializeComponent();
         }
 
-        public FrmDetailView(string addOrModify, string tableName, DataGridViewRow dgvRow = null)
+        public FrmDetailView(string addOrModify, string tableName, List<string> pkList, DataGridViewRow dgvRow = null)
             : this()
         {
             AddOrModify = addOrModify;
             TableName = tableName;
+            PkList = pkList;
             DgvRow = dgvRow;
         }
 
@@ -76,6 +81,16 @@ namespace STIM.WinFormUI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            switch (AddOrModify)
+            {
+                case "Add":
+                    // todo
+                    break;
+                case "Modify":
+                    //todo
+                    break;
+            }
+
             Dictionary<string, object> dictColumns = new Dictionary<string, object>();
         }
 

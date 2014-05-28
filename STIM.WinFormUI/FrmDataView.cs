@@ -16,7 +16,10 @@ namespace STIM.WinFormUI
         /// 表名
         /// </summary>
         string TableName = "GOODS_EXT";
-        List<string> IsPkList = new List<string>();
+        /// <summary>
+        /// 主键
+        /// </summary>
+        List<string> PkList = new List<string>();
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
         Model.STIM_CONFIG _model = new Model.STIM_CONFIG();
 
@@ -28,8 +31,8 @@ namespace STIM.WinFormUI
 
         private void FrmDataView_Load(object sender, EventArgs e)
         {
-            //_model = _bll.GetModel(TableName);
-            _model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            _model = _bll.GetModel(TableName);
+            //_model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
             //按照自定义配置布局控件
             if (_model != null && !string.IsNullOrEmpty(_model.DATAGRIDVIEW_XML))
             {
@@ -68,98 +71,57 @@ namespace STIM.WinFormUI
 
                     if (row["ISPK"].ToString().Equals("Y"))
                     {
-                        IsPkList.Add(dgvCol.Name);
+                        PkList.Add(dgvCol.Name);
                     }
                 }
             }
             LoadData();
         }
 
-        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (-1 < e.RowIndex)
-            {
-                DataGridViewRow dgvRow = dgvData.Rows[e.RowIndex];
-                FrmDetailView frm = new FrmDetailView("Modify", TableName, dgvRow);
-                frm.ShowDialog();
-                LoadData();
-            }
-        }
-
+        #region ===事件===
         private void tsMenuAdd_Click(object sender, EventArgs e)
         {
-            FrmDetailView frm = new FrmDetailView("Add", TableName);
-            frm.ShowDialog();
-            LoadData();
+            AddData();
         }
-
         private void tsMenuModify_Click(object sender, EventArgs e)
         {
-            if (dgvData.CurrentRow != null)
-            {
-                int rowIndex = dgvData.CurrentRow.Index;
-                if (-1 < rowIndex)
-                {
-                    DataGridViewRow dgvRow = dgvData.Rows[rowIndex];
-                    FrmDetailView frm = new FrmDetailView("Modify", TableName, dgvRow);
-                    frm.ShowDialog();
-                    LoadData();
-                }
-            }
+            ModifyData();
         }
-
         private void tsMenuDelete_Click(object sender, EventArgs e)
         {
-            DialogResult resault = MessageBox.Show("确定要删除选中的记录吗？", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-            if (resault == DialogResult.OK)
-            {
-                StringBuilder sbDeleteWhere = new StringBuilder();
-                StringBuilder sbDeleteValue = new StringBuilder();
-                foreach ( DataGridViewRow row in dgvData.Rows)
-                {
-                    //选中的行
-                    if(((DataGridViewCheckBoxCell)row.Cells["rowChecker"]).Selected)
-                    {
-                        //row.
-                    }
-                }
-                //foreach (DataGridViewColumn item in dgvData.Columns)
-                //{
-
-                //    if (Equals(item.Tag, "ISPK"))
-                //    {
-                //        sbDeleteWhere.AppendFormat (item.Name='{0}')
-                //    }
-                //    sbDeleteWhere.Append("||" + item);
-                //}
-                //sbDeleteWhere.Remove(0, 2);//移出头部的||
-
-                //foreach (DataGridViewRow dgvr in dgvData.Rows)
-                //{
-                //    DataGridViewCheckBoxCell dgvckbex = (DataGridViewCheckBoxCell)dgvr.Cells["rowChecker"];
-                //    if (dgvckbex.Selected)
-                //    {
-                //        sbDeleteValue.Append(",'");
-                //        foreach (string item in ISPKColumnList)
-                //        {
-                //            sbDeleteValue.Append(dgvr.Cells[item].Value.ToString());
-                //        }
-                //        sbDeleteValue.Append("'");
-                //    }
-                //}
-                LoadData();
-            }
+            DeleteData();
         }
-
         private void tsMenuRefresh_Click(object sender, EventArgs e)
         {
             LoadData();
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadData();
         }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddData();
+        }
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            ModifyData();
+        }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeleteData();
+        }
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ModifyData();
+        }
+        #endregion
+
+        # region ===方法===
         /// <summary>
         /// 加载数据
         /// </summary>
@@ -168,5 +130,75 @@ namespace STIM.WinFormUI
             StringBuilder sbWhere = new StringBuilder("ROWNUM<=500");
             dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
         }
+        /// <summary>
+        /// 新增数据
+        /// </summary>
+        public void AddData()
+        {
+            FrmDetailView frm = new FrmDetailView("Add",TableName,PkList);
+            frm.ShowDialog();
+            LoadData();
+        }
+        /// <summary>
+        /// 修改数据
+        /// </summary>
+        public void ModifyData()
+        {
+            if (dgvData.CurrentRow != null)
+            {
+                int rowIndex = dgvData.CurrentRow.Index;
+                if (-1 < rowIndex)
+                {
+                    DataGridViewRow dgvRow = dgvData.Rows[rowIndex];
+                    FrmDetailView frm = new FrmDetailView("Modify", TableName,PkList, dgvRow);
+                    frm.ShowDialog();
+                    LoadData();
+                }
+            }
+        }
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        public void DeleteData()
+        {
+            DialogResult resault = MessageBox.Show("确定要删除选中的记录吗？", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (resault == DialogResult.OK)
+            {
+                //把主键拼接为一个查询条件
+                string strDeleteWhere = PkList.Aggregate("", (current, item) => current + ("||" + item));
+                StringBuilder sbDeleteValues = new StringBuilder();
+
+                foreach (DataGridViewRow row in dgvData.Rows)
+                {
+                    //选中的行
+                    if ((bool)row.Cells["rowChecker"].EditedFormattedValue)
+                    {
+                        //string strValue = "";
+                        //foreach (string item in IsPkList)
+                        //{
+                        //    strValue += row.Cells[item].Value.ToString();
+                        //}
+                        string strValue = PkList.Aggregate("", (current, item) => current + row.Cells[item].Value.ToString());
+                        sbDeleteValues.Append(",'" + strValue + "'");
+                    }
+                }
+
+                if (sbDeleteValues.Length > 0)
+                {
+                    //移出头部的,
+                    sbDeleteValues.Remove(0, 1);
+                    LoadData();
+                    richTextBox1.AppendText("delete " + TableName);
+                    richTextBox1.AppendText(" where " + strDeleteWhere.Remove(0, 2));//移出头部的||
+                    richTextBox1.AppendText(" in (" + sbDeleteValues + ")");
+                }
+                else
+                {
+                    MessageBox.Show("请选择需要删除的行记录！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+        #endregion
+
     }
 }

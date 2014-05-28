@@ -200,7 +200,7 @@ namespace STIM.WinFormUI
         private void btnGoodsExt_Click(object sender, EventArgs e)
         {
             FrmDataView frm = new FrmDataView();
-            frm.Show();
+            frm.ShowDialog();
         }
 
 
