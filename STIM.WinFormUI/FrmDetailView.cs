@@ -84,15 +84,12 @@ namespace STIM.WinFormUI
             switch (AddOrModify)
             {
                 case "Add":
-                    // todo
                     break;
                 case "Modify":
-                    //todo
                     break;
             }
 
             Dictionary<string, object> dictColumns = new Dictionary<string, object>();
         }
-
     }
 }
