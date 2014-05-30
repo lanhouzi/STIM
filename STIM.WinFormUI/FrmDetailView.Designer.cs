@@ -33,12 +33,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.grpData = new System.Windows.Forms.GroupBox();
             this.pnlData = new System.Windows.Forms.Panel();
+            this.ckbContinue = new System.Windows.Forms.CheckBox();
             this.grpAction.SuspendLayout();
             this.grpData.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpAction
             // 
+            this.grpAction.Controls.Add(this.ckbContinue);
             this.grpAction.Controls.Add(this.btnClose);
             this.grpAction.Controls.Add(this.btnSave);
             this.grpAction.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -51,7 +53,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(163, 20);
+            this.btnClose.Location = new System.Drawing.Point(207, 20);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 0;
@@ -61,7 +63,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(82, 20);
+            this.btnSave.Location = new System.Drawing.Point(126, 20);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -91,6 +93,16 @@
             this.pnlData.Size = new System.Drawing.Size(893, 491);
             this.pnlData.TabIndex = 0;
             // 
+            // ckbContinue
+            // 
+            this.ckbContinue.AutoSize = true;
+            this.ckbContinue.Location = new System.Drawing.Point(12, 24);
+            this.ckbContinue.Name = "ckbContinue";
+            this.ckbContinue.Size = new System.Drawing.Size(108, 16);
+            this.ckbContinue.TabIndex = 1;
+            this.ckbContinue.Text = "继续添加下一个";
+            this.ckbContinue.UseVisualStyleBackColor = true;
+            // 
             // FrmDetailView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -103,6 +115,7 @@
             this.Text = "FrmDetailView";
             this.Load += new System.EventHandler(this.FrmDetailView_Load);
             this.grpAction.ResumeLayout(false);
+            this.grpAction.PerformLayout();
             this.grpData.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -116,5 +129,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Panel pnlData;
+        private System.Windows.Forms.CheckBox ckbContinue;
     }
 }

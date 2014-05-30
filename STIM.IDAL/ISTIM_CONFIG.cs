@@ -66,6 +66,11 @@ namespace STIM.IDAL
         /// <returns></returns>
         bool AddData(string tableName, Dictionary<string, object> dictColumns);
 
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        bool DeleteDataList(string tableName, string strWhere, string strValues);
+
         #endregion  MethodEx
     }
 }

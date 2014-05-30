@@ -160,6 +160,14 @@ namespace STIM.BLL
         {
             return dal.AddData(tableName, dictColumns);
         }
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        public bool DeleteDataList(string tableName, string strWhere, string strValues)
+        {
+            return dal.DeleteDataList(tableName, strWhere, strValues);
+        }
         #endregion  ExtensionMethod
     }
 }

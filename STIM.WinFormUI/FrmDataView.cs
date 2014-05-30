@@ -17,6 +17,10 @@ namespace STIM.WinFormUI
         /// </summary>
         string TableName = "GOODS_EXT";
         /// <summary>
+        /// 表结构
+        /// </summary>
+        DataTable DtStruct = new DataTable();
+        /// <summary>
         /// 主键
         /// </summary>
         List<string> PkList = new List<string>();
@@ -55,8 +59,8 @@ namespace STIM.WinFormUI
             else
             {
                 //表结构
-                DataSet dsStruct = _bll.GetTableInformation(TableName);
-                foreach (DataRow row in dsStruct.Tables[0].Rows)
+                DtStruct = _bll.GetTableInformation(TableName).Tables[0];
+                foreach (DataRow row in DtStruct.Rows)
                 {
                     var dgvCol = new DataGridViewTextBoxColumn
                     {
@@ -75,7 +79,7 @@ namespace STIM.WinFormUI
                     }
                 }
             }
-            LoadData();
+            //LoadData();
         }
 
         #region ===事件===
@@ -135,7 +139,7 @@ namespace STIM.WinFormUI
         /// </summary>
         public void AddData()
         {
-            FrmDetailView frm = new FrmDetailView("Add",TableName,PkList);
+            FrmDetailView frm = new FrmDetailView("Add", TableName,DtStruct, PkList);
             frm.ShowDialog();
             LoadData();
         }
@@ -150,7 +154,7 @@ namespace STIM.WinFormUI
                 if (-1 < rowIndex)
                 {
                     DataGridViewRow dgvRow = dgvData.Rows[rowIndex];
-                    FrmDetailView frm = new FrmDetailView("Modify", TableName,PkList, dgvRow);
+                    FrmDetailView frm = new FrmDetailView("Modify", TableName,DtStruct, PkList, dgvRow);
                     frm.ShowDialog();
                     LoadData();
                 }
@@ -187,10 +191,19 @@ namespace STIM.WinFormUI
                 {
                     //移出头部的,
                     sbDeleteValues.Remove(0, 1);
+                    bool result= _bll.DeleteDataList(TableName, strDeleteWhere.Remove(0, 2), sbDeleteValues.ToString());
+                    if (result)
+                    {
+                        MessageBox.Show("删除成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     LoadData();
-                    richTextBox1.AppendText("delete " + TableName);
-                    richTextBox1.AppendText(" where " + strDeleteWhere.Remove(0, 2));//移出头部的||
-                    richTextBox1.AppendText(" in (" + sbDeleteValues + ")");
+                    //richTextBox1.AppendText("delete " + TableName);
+                    //richTextBox1.AppendText(" where " + strDeleteWhere.Remove(0, 2));//移出头部的||
+                    //richTextBox1.AppendText(" in (" + sbDeleteValues + ")");
                 }
                 else
                 {

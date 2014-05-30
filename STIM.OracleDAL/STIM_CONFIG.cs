@@ -448,12 +448,13 @@ namespace STIM.OracleDAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteDataList(string tableName, string strWhere)
+        public bool DeleteDataList(string tableName, string strWhere,string strValues)
         {
             StringBuilder strSql = new StringBuilder("delete from " + tableName);
             if (string.IsNullOrEmpty(strWhere))
             {
                 strSql.Append(" where " + strWhere);
+                strSql.Append(" in (" + strValues + ")");
                 int rows = ora.ExecuteSql(strSql.ToString());
                 return rows > 0;
             }

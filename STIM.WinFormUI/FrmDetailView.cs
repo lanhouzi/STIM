@@ -21,6 +21,10 @@ namespace STIM.WinFormUI
         /// </summary>
         string TableName = "";
         /// <summary>
+        /// 表结构
+        /// </summary>
+        DataTable DtStruct = new DataTable();
+        /// <summary>
         /// 主键
         /// </summary>
         List<string> PkList = new List<string>();
@@ -34,11 +38,12 @@ namespace STIM.WinFormUI
             InitializeComponent();
         }
 
-        public FrmDetailView(string addOrModify, string tableName, List<string> pkList, DataGridViewRow dgvRow = null)
+        public FrmDetailView(string addOrModify, string tableName,DataTable dtStruct, List<string> pkList, DataGridViewRow dgvRow = null)
             : this()
         {
             AddOrModify = addOrModify;
             TableName = tableName;
+            DtStruct = dtStruct;
             PkList = pkList;
             DgvRow = dgvRow;
         }
@@ -60,7 +65,7 @@ namespace STIM.WinFormUI
                     //字段值
                     object columnValue = null;
                     if (AddOrModify == "Modify")
-                    {
+                    { 
                         columnValue = DgvRow.Cells[columnName].Value;
                     }
                     CreateStimControl stimControl = new CreateStimControl(item, columnValue);
@@ -81,15 +86,23 @@ namespace STIM.WinFormUI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Dictionary<string, object> dictColumns = new Dictionary<string, object>();
             switch (AddOrModify)
             {
                 case "Add":
+                    bool result=_bll.AddData(TableName, dictColumns);
+                    if (result)
+                    {
+                        MessageBox.Show("删除成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     break;
                 case "Modify":
                     break;
-            }
-
-            Dictionary<string, object> dictColumns = new Dictionary<string, object>();
+            }            
         }
     }
 }
