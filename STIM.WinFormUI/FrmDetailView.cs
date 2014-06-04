@@ -87,6 +87,7 @@ namespace STIM.WinFormUI
         private void btnSave_Click(object sender, EventArgs e)
         {
             Dictionary<string, object> dictColumns = new Dictionary<string, object>();
+            
             switch (AddOrModify)
             {
                 case "Add":
