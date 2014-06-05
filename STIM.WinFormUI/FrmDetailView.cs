@@ -87,23 +87,23 @@ namespace STIM.WinFormUI
         private void btnSave_Click(object sender, EventArgs e)
         {
             Dictionary<string, object> dictColumns = new Dictionary<string, object>();
-            
+            bool result = false;
             switch (AddOrModify)
             {
                 case "Add":
-                    bool result=_bll.AddData(TableName, dictColumns);
-                    if (result)
-                    {
-                        MessageBox.Show("删除成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("删除失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    result=_bll.AddData(TableName, dictColumns);
                     break;
                 case "Modify":
                     break;
-            }            
+            }
+            if (result)
+            {
+                MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
