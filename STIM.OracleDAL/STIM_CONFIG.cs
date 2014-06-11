@@ -358,6 +358,20 @@ namespace STIM.OracleDAL
             return ora.Query(strSql.ToString());
         }
         /// <summary>
+        /// 是否存在该记录
+        /// </summary>
+        public bool ExistsData(string tableName)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select count(1) from STIM_CONFIG");
+            strSql.Append(" where TABLE_NAME=:TABLE_NAME ");
+            OracleParameter[] parameters = {
+                    new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2)			};
+            parameters[0].Value = tableName;
+
+            return ora.Exists(strSql.ToString(), parameters);
+        }
+        /// <summary>
         /// 新增数据
         /// </summary>
         /// <param name="tableName">表名</param>
