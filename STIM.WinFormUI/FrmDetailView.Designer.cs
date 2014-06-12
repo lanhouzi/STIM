@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.grpAction = new System.Windows.Forms.GroupBox();
+            this.ckbContinue = new System.Windows.Forms.CheckBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.grpData = new System.Windows.Forms.GroupBox();
             this.pnlData = new System.Windows.Forms.Panel();
-            this.ckbContinue = new System.Windows.Forms.CheckBox();
             this.grpAction.SuspendLayout();
             this.grpData.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +50,16 @@
             this.grpAction.TabIndex = 0;
             this.grpAction.TabStop = false;
             this.grpAction.Text = "操作区域";
+            // 
+            // ckbContinue
+            // 
+            this.ckbContinue.AutoSize = true;
+            this.ckbContinue.Location = new System.Drawing.Point(12, 24);
+            this.ckbContinue.Name = "ckbContinue";
+            this.ckbContinue.Size = new System.Drawing.Size(108, 16);
+            this.ckbContinue.TabIndex = 1;
+            this.ckbContinue.Text = "继续添加下一个";
+            this.ckbContinue.UseVisualStyleBackColor = true;
             // 
             // btnClose
             // 
@@ -92,16 +102,6 @@
             this.pnlData.Name = "pnlData";
             this.pnlData.Size = new System.Drawing.Size(893, 491);
             this.pnlData.TabIndex = 0;
-            // 
-            // ckbContinue
-            // 
-            this.ckbContinue.AutoSize = true;
-            this.ckbContinue.Location = new System.Drawing.Point(12, 24);
-            this.ckbContinue.Name = "ckbContinue";
-            this.ckbContinue.Size = new System.Drawing.Size(108, 16);
-            this.ckbContinue.TabIndex = 1;
-            this.ckbContinue.Text = "继续添加下一个";
-            this.ckbContinue.UseVisualStyleBackColor = true;
             // 
             // FrmDetailView
             // 

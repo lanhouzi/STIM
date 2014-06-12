@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using STIM.WinFormUI.ExtControl;
 
 namespace STIM.WinFormUI
 {
@@ -38,7 +39,7 @@ namespace STIM.WinFormUI
             InitializeComponent();
         }
 
-        public FrmDetailView(string addOrModify, string tableName,DataTable dtStruct, List<string> pkList, DataGridViewRow dgvRow = null)
+        public FrmDetailView(string addOrModify, string tableName, DataTable dtStruct, List<string> pkList, DataGridViewRow dgvRow = null)
             : this()
         {
             AddOrModify = addOrModify;
@@ -65,7 +66,7 @@ namespace STIM.WinFormUI
                     //字段值
                     object columnValue = null;
                     if (AddOrModify == "Modify")
-                    { 
+                    {
                         columnValue = DgvRow.Cells[columnName].Value;
                     }
                     CreateStimControl stimControl = new CreateStimControl(item, columnValue);
@@ -87,11 +88,17 @@ namespace STIM.WinFormUI
         private void btnSave_Click(object sender, EventArgs e)
         {
             Dictionary<string, object> dictColumns = new Dictionary<string, object>();
+            var controls = pnlData.Controls;
+            foreach (StimControl item in controls)
+            {
+                dictColumns.Add(item.Name, GetValueByType(item.DataFile));
+
+            }
             bool result = false;
             switch (AddOrModify)
             {
                 case "Add":
-                    result=_bll.AddData(TableName, dictColumns);
+                    result = _bll.AddData(TableName, dictColumns);
                     break;
                 case "Modify":
                     break;
@@ -103,6 +110,57 @@ namespace STIM.WinFormUI
             else
             {
                 MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (ckbContinue.Checked)
+            {
+                //todo:
+            }
+            else ;
+            {
+                this.Close();
+            }
+        }
+        /// <summary>
+        /// 根据控件类型返回值
+        /// </summary>
+        /// <param name="control">目标控件</param>
+        /// <returns></returns>
+        public object GetValueByType(Control control)
+        {
+            Type type = control.GetType();
+            switch (type.Name)
+            {
+                case "TextBox":
+                    return ((TextBox)control).Text;
+                    break;
+                case "DateTimePicker":
+                    return ((DateTimePicker)control).Value;
+                    break;
+                case "NumericUpDown":
+                    return ((NumericUpDown)control).Value;
+                    break;
+                case "CheckBox":
+                    return ((CheckBox)control).Checked;
+                    break;
+                case "RadioButton":
+                    return ((RadioButton)control).Checked;
+                    break;
+                case "ComboBox":
+                    return ((ComboBox)control).SelectedText;
+                    break;
+                case "CheckedListBox":
+                    return ((CheckedListBox)control).SelectedItems;
+                    break;
+                case "ListBox":
+                    return ((ListBox)control).SelectedItems;
+                    break;
+                case "DataGridView":
+                    return ((DataGridView)control).SelectedRows;
+                    break;
+                default:
+                    return control.Text;
+                    break;
             }
         }
     }
