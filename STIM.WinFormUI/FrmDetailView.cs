@@ -47,6 +47,10 @@ namespace STIM.WinFormUI
             DtStruct = dtStruct;
             PkList = pkList;
             DgvRow = dgvRow;
+            if ("Modify" == AddOrModify)
+            {
+                ckbContinue.Enabled = false;
+            }
         }
 
         private void FrmDetailView_Load(object sender, EventArgs e)
@@ -70,6 +74,11 @@ namespace STIM.WinFormUI
                         columnValue = DgvRow.Cells[columnName].Value;
                     }
                     CreateStimControl stimControl = new CreateStimControl(item, columnValue);
+                    //非空字段
+                    if (DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N")
+                    {
+                        stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
+                    }
                     pnlData.Controls.Add(stimControl.AutoStimControl);
                 }
 
@@ -87,20 +96,77 @@ namespace STIM.WinFormUI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Dictionary<string, object> dictColumns = new Dictionary<string, object>();
             var controls = pnlData.Controls;
-            foreach (StimControl item in controls)
-            {
-                dictColumns.Add(item.Name, GetValueByType(item.DataFile));
-
-            }
             bool result = false;
             switch (AddOrModify)
             {
                 case "Add":
-                    result = _bll.AddData(TableName, dictColumns);
+                    StringBuilder sbExists = new StringBuilder("select count(1) from " + TableName + " where 1=1 ");
+                    StringBuilder sbAddSql = new StringBuilder("insert into " + TableName);
+                    StringBuilder sbColumns = new StringBuilder("(");
+                    StringBuilder sbValues = new StringBuilder(" values (");
+                    foreach (StimControl item in controls)
+                    {
+                        var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
+                        //如果是主键
+                        if (PkList.Contains(item.Name))
+                        {
+                            sbExists.Append(" and " + item.Name);
+                            sbExists.Append("=" + value);
+                        }
+                        //值不为空（此处''表示为空）
+                        if ("''" != value.ToString())
+                        {
+                            sbColumns.Append("," + item.Name);
+                            sbValues.Append("," + value);
+                        }
+                    }
+                    sbColumns.Remove(1, 1);//移除第一个逗号
+                    sbValues.Remove(9, 1);//移除第一个逗号
+                    sbColumns.Append(")");
+                    sbValues.Append(")");
+                    sbAddSql.Append(sbColumns);
+                    sbAddSql.Append(sbValues);
+                    //是否存在数据记录
+                    if (_bll.ExistsData(sbExists.ToString()))
+                    {
+                        MessageBox.Show("已存在该条记录！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else
+                    {
+                        result = _bll.AddData(sbAddSql.ToString());
+                    }
                     break;
                 case "Modify":
+                    StringBuilder sbUpdateSql = new StringBuilder("update " + TableName + " set ");
+                    StringBuilder sbKeyValue = new StringBuilder();
+                    StringBuilder sbWhere = new StringBuilder(" where 1=1 ");
+                    foreach (StimControl item in controls)
+                    {
+                        //如果不是主键
+                        if (!PkList.Contains(item.Name))
+                        {
+                            var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
+                            //值不为空（此处''表示为空）
+                            if ("''" != value.ToString())
+                            {
+                                sbKeyValue.Append("," + item.Name);
+                                sbKeyValue.Append("=" + value);
+                            }
+                        }
+                        else
+                        {
+                            sbWhere.Append(" and " + item.Name);
+                            sbWhere.Append("=" +
+                                           GetValueByType(item.DataFile,
+                                               DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]));
+                        }
+                    }
+                    sbKeyValue.Remove(0, 1);//移除第一个逗号
+                    sbUpdateSql.Append(sbKeyValue);
+                    sbUpdateSql.Append(sbWhere);
+                    result = _bll.UpdateData(sbUpdateSql.ToString());
                     break;
             }
             if (result)
@@ -121,45 +187,60 @@ namespace STIM.WinFormUI
                 this.Close();
             }
         }
+
         /// <summary>
         /// 根据控件类型返回值
         /// </summary>
         /// <param name="control">目标控件</param>
-        /// <returns></returns>
-        public object GetValueByType(Control control)
+        /// <param name="row"></param>
+        /// <return></return>
+        public object GetValueByType(Control control, DataRow row)
         {
+            object result = null;
             Type type = control.GetType();
             switch (type.Name)
             {
                 case "TextBox":
-                    return ((TextBox)control).Text;
+                    result = ((TextBox)control).Text;
                     break;
                 case "DateTimePicker":
-                    return ((DateTimePicker)control).Value;
+                    result = ((DateTimePicker)control).Value;
                     break;
                 case "NumericUpDown":
-                    return ((NumericUpDown)control).Value;
+                    result = ((NumericUpDown)control).Value;
                     break;
                 case "CheckBox":
-                    return ((CheckBox)control).Checked;
+                    result = ((CheckBox)control).Checked;
                     break;
                 case "RadioButton":
-                    return ((RadioButton)control).Checked;
+                    result = ((RadioButton)control).Checked;
                     break;
                 case "ComboBox":
-                    return ((ComboBox)control).SelectedText;
+                    result = ((ComboBox)control).SelectedText;
                     break;
                 case "CheckedListBox":
-                    return ((CheckedListBox)control).SelectedItems;
+                    result = ((CheckedListBox)control).SelectedItems;
                     break;
                 case "ListBox":
-                    return ((ListBox)control).SelectedItems;
+                    result = ((ListBox)control).SelectedItems;
                     break;
                 case "DataGridView":
-                    return ((DataGridView)control).SelectedRows;
+                    result = ((DataGridView)control).SelectedRows;
                     break;
                 default:
-                    return control.Text;
+                    result = control.Text;
+                    break;
+            }
+            switch (row["DATA_TYPE"].ToString())
+            {
+                case "NUMBER":
+                    return result;
+                    break;
+                case "DATE":
+                    return "to_date('" + result + "','YYYY-MM-DD HH24:MI:SS')";
+                    break;
+                default:
+                    return "'" + result + "'";
                     break;
             }
         }

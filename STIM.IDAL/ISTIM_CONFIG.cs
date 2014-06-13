@@ -59,13 +59,23 @@ namespace STIM.IDAL
         /// <returns></returns>
         DataSet GetDataList(string tableName, string strWhere);
         /// <summary>
+        /// 是否存在数据记录
+        /// </summary>
+        /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        bool ExistsData(string strSql);
+        /// <summary>
         /// 新增数据
         /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="dictColumns">列字典</param>
+        /// <param name="strSql">SQL语句</param>
         /// <returns></returns>
-        bool AddData(string tableName, Dictionary<string, object> dictColumns);
-
+        bool AddData(string strSql);
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        /// /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        bool UpdateData(string strSql);
         /// <summary>
         /// 批量删除数据
         /// </summary>

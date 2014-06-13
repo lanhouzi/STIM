@@ -149,18 +149,33 @@ namespace STIM.BLL
         {
             return dal.GetDataList(tableName, strWhere);
         }
-
+        /// <summary>
+        /// 是否存在数据记录
+        /// </summary>
+        /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        public bool ExistsData(string strSql)
+        {
+            return dal.ExistsData(strSql);
+        }
         /// <summary>
         /// 新增数据
         /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="dictColumns">列字典</param>
+        /// <param name="strSql">SQL语句</param>
         /// <returns></returns>
-        public bool AddData(string tableName, Dictionary<string, object> dictColumns)
+        public bool AddData(string strSql)
         {
-            return dal.AddData(tableName, dictColumns);
+            return dal.AddData(strSql);
         }
-
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        /// /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        public bool UpdateData(string strSql)
+        {
+            return dal.UpdateData(strSql);
+        }
         /// <summary>
         /// 批量删除数据
         /// </summary>

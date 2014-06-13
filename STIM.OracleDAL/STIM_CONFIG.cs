@@ -358,90 +358,32 @@ namespace STIM.OracleDAL
             return ora.Query(strSql.ToString());
         }
         /// <summary>
-        /// 是否存在该记录
+        /// 是否存在数据记录
         /// </summary>
-        public bool ExistsData(string tableName)
+        /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        public bool ExistsData(string strSql)
         {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) from STIM_CONFIG");
-            strSql.Append(" where TABLE_NAME=:TABLE_NAME ");
-            OracleParameter[] parameters = {
-                    new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2)			};
-            parameters[0].Value = tableName;
-
-            return ora.Exists(strSql.ToString(), parameters);
+            return ora.Exists(strSql);
         }
         /// <summary>
         /// 新增数据
         /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="dictColumns">列字典</param>
+        /// <param name="strSql">SQL语句</param>
         /// <returns></returns>
-        public bool AddData(string tableName, Dictionary<string, object> dictColumns)
+        public bool AddData(string strSql)
         {
-            StringBuilder strSql = new StringBuilder("insert into " + tableName);
-            StringBuilder sbColumns = new StringBuilder(" (");
-            StringBuilder sbValues = new StringBuilder(" values (");
-            OracleParameter[] parameters = { };
-            //OracleParameter[] parameters = { 
-            //        new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2),
-            //        new OracleParameter(":SEARCH_FORM_XML", OracleDbType.NClob),
-            //        new OracleParameter(":DETAIL_FORM_XML", OracleDbType.NClob),
-            //        new OracleParameter(":DATAGRIDVIEW_XML", OracleDbType.NClob),
-            //        new OracleParameter(":REMARK", OracleDbType.Varchar2)};
-            //parameters[0].Value = model.TABLE_NAME;
-            //parameters[1].Value = model.SEARCH_FORM_XML;
-            //parameters[2].Value = model.DETAIL_FORM_XML;
-            //parameters[3].Value = model.DATAGRIDVIEW_XML;
-            //parameters[4].Value = model.REMARK;
-
-            foreach (var item in dictColumns)
-            {
-                sbColumns.Append("," + item.Key);
-                sbValues.Append(",:" + item.Key);
-                OracleDbType odbType;
-                if (item.Value.GetType().Name == "String")
-                    odbType = OracleDbType.Varchar2;
-                else if (item.Value.GetType().Name == "DateTime")
-                    odbType = OracleDbType.Date;
-                else
-                    odbType = OracleDbType.Decimal;
-                OracleParameter[] p = { new OracleParameter(":" + item.Key, odbType) };
-                p[0].Value = item.Value;
-                p.CopyTo(parameters, parameters.Length);
-            }
-            sbColumns.Append(")");
-            sbValues.Append(")");
-            strSql.Append(sbColumns.ToString().TrimStart(','));
-            strSql.Append(sbValues.ToString().TrimStart(','));
-
-            int rows = ora.ExecuteSql(strSql.ToString(), parameters);
+            int rows = ora.ExecuteSql(strSql);
             return rows > 0;
         }
         /// <summary>
-        /// 更新一条数据
+        /// 更新数据
         /// </summary>
-        public bool UpdateData(STIM.Model.STIM_CONFIG model)
+        /// /// <param name="strSql">SQL语句</param>
+        /// <returns></returns>
+        public bool UpdateData(string strSql)
         {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("update STIM_CONFIG set ");
-            strSql.Append("SEARCH_FORM_XML=:SEARCH_FORM_XML,DETAIL_FORM_XML=:DETAIL_FORM_XML,DATAGRIDVIEW_XML=:DATAGRIDVIEW_XML,REMARK=:REMARK");
-            strSql.Append(" where TABLE_NAME=:TABLE_NAME");
-
-            OracleParameter[] parameters = {
-                    new OracleParameter(":SEARCH_FORM_XML", OracleDbType.NClob),
-                    new OracleParameter(":DETAIL_FORM_XML", OracleDbType.NClob),
-                    new OracleParameter(":DATAGRIDVIEW_XML", OracleDbType.NClob),
-                    new OracleParameter(":REMARK", OracleDbType.Varchar2),
-                    new OracleParameter(":TABLE_NAME", OracleDbType.Varchar2)};
-
-            parameters[0].Value = model.SEARCH_FORM_XML;
-            parameters[1].Value = model.DETAIL_FORM_XML;
-            parameters[2].Value = model.DATAGRIDVIEW_XML;
-            parameters[3].Value = model.REMARK;
-            parameters[4].Value = model.TABLE_NAME;
-
-            int rows = ora.ExecuteSql(strSql.ToString(), parameters);
+            int rows = ora.ExecuteSql(strSql);
             return rows > 0;
         }
 
@@ -462,7 +404,7 @@ namespace STIM.OracleDAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteDataList(string tableName, string strWhere,string strValues)
+        public bool DeleteDataList(string tableName, string strWhere, string strValues)
         {
             StringBuilder strSql = new StringBuilder("delete from " + tableName);
             if (string.IsNullOrEmpty(strWhere))
