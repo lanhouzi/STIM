@@ -35,8 +35,8 @@ namespace STIM.WinFormUI
 
         private void FrmDataView_Load(object sender, EventArgs e)
         {
-            _model = _bll.GetModel(TableName);
-            //_model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            //_model = _bll.GetModel(TableName);
+            _model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
             //按照自定义配置布局控件
             if (_model != null && !string.IsNullOrEmpty(_model.DATAGRIDVIEW_XML))
             {
@@ -132,7 +132,7 @@ namespace STIM.WinFormUI
         public void LoadData()
         {
             StringBuilder sbWhere = new StringBuilder("ROWNUM<=500");
-            dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
+            //dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
         }
         /// <summary>
         /// 新增数据

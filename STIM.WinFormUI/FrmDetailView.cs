@@ -75,10 +75,10 @@ namespace STIM.WinFormUI
                     }
                     CreateStimControl stimControl = new CreateStimControl(item, columnValue);
                     //非空字段
-                    if (DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N")
-                    {
-                        stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
-                    }
+                    //if (DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N")
+                    //{
+                    //    stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
+                    //}
                     pnlData.Controls.Add(stimControl.AutoStimControl);
                 }
 
