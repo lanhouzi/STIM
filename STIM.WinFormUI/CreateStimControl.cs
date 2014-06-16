@@ -123,7 +123,10 @@ namespace STIM.WinFormUI
                    Visible = (bool)xElement.Attribute("Visible"),
                    //Enabled = (bool)xElement.Attribute("Enabled"),
                    //TLP={CellBorderStyle=TableLayoutPanelCellBorderStyle.None},
-                   lblFile = { Text = (string)xElement.Attribute("Column_Name") },
+                   lblFile =
+                   {
+                       Text = xElement.Element("Lable").Value != "" ? xElement.Element("Lable").Value : (string)xElement.Attribute("Column_Name")
+                   },
                    DataFile =
                    {
                        Enabled = (bool)xElement.Attribute("Enabled"),

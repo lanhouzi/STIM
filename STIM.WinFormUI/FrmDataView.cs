@@ -35,6 +35,8 @@ namespace STIM.WinFormUI
 
         private void FrmDataView_Load(object sender, EventArgs e)
         {
+            //表结构
+            DtStruct = _bll.GetTableInformation(TableName).Tables[0];
             //_model = _bll.GetModel(TableName);
             _model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
             //按照自定义配置布局控件
@@ -58,8 +60,6 @@ namespace STIM.WinFormUI
             //系统自动有序布局控件
             else
             {
-                //表结构
-                DtStruct = _bll.GetTableInformation(TableName).Tables[0];
                 foreach (DataRow row in DtStruct.Rows)
                 {
                     var dgvCol = new DataGridViewTextBoxColumn
@@ -132,7 +132,7 @@ namespace STIM.WinFormUI
         public void LoadData()
         {
             StringBuilder sbWhere = new StringBuilder("ROWNUM<=500");
-            //dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
+            dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
         }
         /// <summary>
         /// 新增数据
