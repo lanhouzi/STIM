@@ -37,8 +37,15 @@ namespace STIM.WinFormUI
         {
             //表结构
             DtStruct = _bll.GetTableInformation(TableName).Tables[0];
-            //_model = _bll.GetModel(TableName);
-            _model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            _model = _bll.GetModel(TableName);
+            foreach (DataRow row in DtStruct.Rows)
+            {
+                if (row["ISPK"].ToString().Equals("Y"))
+                {
+                    PkList.Add((string)row["Column_Name".ToUpper()]);
+                }
+            }
+            //_model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
             //按照自定义配置布局控件
             if (_model != null && !string.IsNullOrEmpty(_model.DATAGRIDVIEW_XML))
             {
@@ -73,10 +80,10 @@ namespace STIM.WinFormUI
                     };
                     dgvData.Columns.Add(dgvCol);
 
-                    if (row["ISPK"].ToString().Equals("Y"))
-                    {
-                        PkList.Add(dgvCol.Name);
-                    }
+                    //if (row["ISPK"].ToString().Equals("Y"))
+                    //{
+                    //    PkList.Add(dgvCol.Name);
+                    //}
                 }
             }
             //LoadData();
@@ -139,7 +146,7 @@ namespace STIM.WinFormUI
         /// </summary>
         public void AddData()
         {
-            FrmDetailView frm = new FrmDetailView("Add", TableName,DtStruct, PkList);
+            FrmDetailView frm = new FrmDetailView("Add", TableName, DtStruct, PkList);
             frm.ShowDialog();
             LoadData();
         }
@@ -154,7 +161,7 @@ namespace STIM.WinFormUI
                 if (-1 < rowIndex)
                 {
                     DataGridViewRow dgvRow = dgvData.Rows[rowIndex];
-                    FrmDetailView frm = new FrmDetailView("Modify", TableName,DtStruct, PkList, dgvRow);
+                    FrmDetailView frm = new FrmDetailView("Modify", TableName, DtStruct, PkList, dgvRow);
                     frm.ShowDialog();
                     LoadData();
                 }
@@ -191,7 +198,7 @@ namespace STIM.WinFormUI
                 {
                     //移出头部的,
                     sbDeleteValues.Remove(0, 1);
-                    bool result= _bll.DeleteDataList(TableName, strDeleteWhere.Remove(0, 2), sbDeleteValues.ToString());
+                    bool result = _bll.DeleteDataList(TableName, strDeleteWhere.Remove(0, 2), sbDeleteValues.ToString());
                     if (result)
                     {
                         MessageBox.Show("删除成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);

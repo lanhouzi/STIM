@@ -63,14 +63,14 @@ namespace STIM.WinFormUI
 
         private void FrmDetailView_Load(object sender, EventArgs e)
         {
-            //_model = _bll.GetModel(TableName);
-            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            _model = _bll.GetModel(TableName);
+            //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
             //按照自定义配置布局控件
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
             {
                 xDocConfig = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
-                xElements = xDocConfig.Root.Elements().Select(el => el);
+                xElements = xDocConfig.Root.Elements();//.Select(el => el);
                 foreach (XElement item in xElements)
                 {
                     //字段名
@@ -84,10 +84,11 @@ namespace STIM.WinFormUI
                     CreateStimControl stimControl = new CreateStimControl(item, columnValue);
                     //非空字段
                     //DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N"
-                    //xElements.Elements("DataRule").Single(fruit => fruit.Attribute("Max") > 10).Attributes("Min")
-                    if ((string)item.Element("DataRule").Attribute("Nullable") == "N")
+                    //var test = xElements.Elements("DataRule").Single(el => (int)el.Attribute("Max") == 100);
+                    XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
+                    //(string)xEl.Attribute("Nullable") == "N"
+                    if ((string)xEl.Attribute("Nullable") == "N")
                     {
-
                         stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
                     }
                     pnlData.Controls.Add(stimControl.AutoStimControl);
@@ -118,7 +119,7 @@ namespace STIM.WinFormUI
                     ModifyData(controls, ref result);
                     break;
             }
-            if ("error" != (string)result)
+            if ("error" != result.ToString ())
             {
                 if ((bool)result)
                 {
@@ -210,16 +211,18 @@ namespace STIM.WinFormUI
             foreach (StimControl item in controls)
             {
                 var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
-                //值为空
+                //值为空（此处''表示为空）
                 if ("''" == value.ToString())
                 {
-                    if ("N" == DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]["NULLABLE"].ToString())
+                    XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                    //字段不能为空
+                    if ((string)xEl.Attribute("Nullable") == "N")
                     {
                         MessageBox.Show(item.lblFile.Text + " 不能为空！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
-                //值不为空（此处''表示为空）
+                //值不为空
                 else
                 {
                     sbColumns.Append("," + item.Name);
@@ -265,22 +268,23 @@ namespace STIM.WinFormUI
                 if (!PkList.Contains(item.Name))
                 {
                     var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
+                    //值为空（此处''表示为空）
                     if ("''" == value.ToString())
                     {
-                        //xElements.Elements("DataRule").Attributes("Nullable");
-                        //(string)item.Element("DataRule").Attribute("Nullable") == "N"
-                        if ("N" == DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]["NULLABLE"].ToString())
+                        XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                        //字段不能为空
+                        if ((string)xEl.Attribute("Nullable") == "N")
                         {
                             MessageBox.Show(item.lblFile.Text + " 不能为空！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             result = "error";
                             return;
                         }
                     }
-                    //值不为空（此处''表示为空）
+                    //值不为空
                     else
                     {
                         sbKeyValue.Append("," + item.Name);
-                        sbKeyValue.Append("," + value);
+                        sbKeyValue.Append("=" + value);
                     }
                 }
                 else

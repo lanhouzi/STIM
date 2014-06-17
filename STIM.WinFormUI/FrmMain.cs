@@ -19,6 +19,10 @@ namespace STIM.WinFormUI
         /// 表单布局 列
         /// </summary>
         private int _layoutColumn = -1;
+        /// <summary>
+        /// 表结构
+        /// </summary>
+        DataTable DtStruct = new DataTable();
 
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
         Model.STIM_CONFIG _model = new Model.STIM_CONFIG();
@@ -52,8 +56,11 @@ namespace STIM.WinFormUI
             _layoutRow = -1;
             _layoutColumn = -1;
             tabPageDetail.Controls.Clear();
-            //_model = _bll.GetModel(e.Node.Name);
-            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+
+            DtStruct = _bll.GetTableInformation(e.Node.Name).Tables[0];
+
+            _model = _bll.GetModel(e.Node.Name);
+            //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
             //按照自定义配置布局控件
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
@@ -71,8 +78,7 @@ namespace STIM.WinFormUI
             //系统自动有序布局控件
             else
             {
-                DataSet ds = _bll.GetTableInformation(e.Node.Name);
-                foreach (DataRow row in ds.Tables[0].Rows)
+                foreach (DataRow row in DtStruct.Rows)
                 {
                     _layoutColumn++;
                     //3表示显示3列
@@ -116,17 +122,18 @@ namespace STIM.WinFormUI
         {
             string tableName = tvSingleTableList.SelectedNode.Name;
             var controls = tabPageDetail.Controls;
+            _model.TABLE_NAME = tableName;
             _model.DETAIL_FORM_XML = MakeXmlLinq(tableName, controls);
 
-            //bool result = _bll.Update(_model);
-            //if (result)
-            //{
-            //    MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            bool result = _bll.Update(_model);
+            if (result)
+            {
+                MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         /// <summary>
         /// 使用 LINQ to XML 的方式创建XML
@@ -147,7 +154,7 @@ namespace STIM.WinFormUI
                 XElement xEle =
                     new XElement("Column",
                         new XAttribute("Column_Name", control.Name),
-                    //new XAttribute("ControlType", control.GetType().ToString()),
+                        //new XAttribute("ControlType", control.GetType().ToString()),
                         new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
                         new XAttribute("Enabled", control.Enabled.ToString()),
@@ -155,7 +162,7 @@ namespace STIM.WinFormUI
                         new XAttribute("Y", control.Location.Y),
                         new XAttribute("W", control.Width),
                         new XAttribute("H", control.Height),
-                            new XElement("Lable", "Value",
+                            new XElement("Lable", control.Name,
                                 new XAttribute("Visible", control.Controls[0].Controls["lblFile"].Visible.ToString()),
                                 new XAttribute("Enabled", control.Controls[0].Controls["lblFile"].Enabled.ToString()),
                                 new XAttribute("W", control.Controls[0].Controls["lblFile"].Width),
@@ -166,6 +173,10 @@ namespace STIM.WinFormUI
                                 new XAttribute("Enabled", control.Controls[0].Controls["dataFile"].Enabled.ToString()),
                                 new XAttribute("W", control.Controls[0].Controls["dataFile"].Width),
                                 new XAttribute("H", control.Controls[0].Controls["dataFile"].Height)
+                            ),
+                            new XElement("DataRule",
+                                new XAttribute("Nullable", DtStruct.Select("COLUMN_NAME='" + control.Name + "'")[0]["NULLABLE"].ToString()),
+                                new XAttribute("DataSource", "")
                             )
                     );
                 xDoc.Root.Add(xEle);
