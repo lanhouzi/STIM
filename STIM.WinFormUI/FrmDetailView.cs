@@ -219,6 +219,7 @@ namespace STIM.WinFormUI
                     if ((string)xEl.Attribute("Nullable") == "N")
                     {
                         MessageBox.Show(item.lblFile.Text + " 不能为空！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        result = "error";
                         return;
                     }
                 }
