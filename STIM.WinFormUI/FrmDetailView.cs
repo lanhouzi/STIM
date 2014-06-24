@@ -86,12 +86,19 @@ namespace STIM.WinFormUI
                     //DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N"
                     //var test = xElements.Elements("DataRule").Single(el => (int)el.Attribute("Max") == 100);
                     XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
-                    //(string)xEl.Attribute("Nullable") == "N"
-                    if ((string)xEl.Attribute("Nullable") == "N")
+                    
+                    pnlData.Controls.Add(stimControl.AutoStimControl);
+                    //非空字段
+                    if (xEl.Attribute("Nullable").Value == "N")
                     {
                         stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
                     }
-                    pnlData.Controls.Add(stimControl.AutoStimControl);
+                    //ComboBox
+                    if (stimControl.AutoStimControl.DataFile is ComboBox)
+                    {
+                        ((ComboBox) stimControl.AutoStimControl.DataFile).SelectedValue = columnValue;
+                        //stimControl.AutoStimControl.DataFile.Text = "否";
+                    }
                 }
 
             }
@@ -169,7 +176,7 @@ namespace STIM.WinFormUI
                     result = ((RadioButton)control).Checked;
                     break;
                 case "ComboBox":
-                    result = ((ComboBox)control).SelectedText;
+                    result = ((ComboBox)control).SelectedValue;
                     break;
                 case "CheckedListBox":
                     result = ((CheckedListBox)control).SelectedItems;

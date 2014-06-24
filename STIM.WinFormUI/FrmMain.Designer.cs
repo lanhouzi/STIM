@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -49,6 +50,7 @@
             this.btnGoodsExt = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
+            this.sTIMCONFIGBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -57,6 +59,7 @@
             this.grpRight.SuspendLayout();
             this.grpLeft.SuspendLayout();
             this.grpBottom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sTIMCONFIGBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -262,6 +265,10 @@
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
             // 
+            // sTIMCONFIGBindingSource
+            // 
+            this.sTIMCONFIGBindingSource.DataSource = typeof(STIM.Model.STIM_CONFIG);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -287,6 +294,7 @@
             this.grpRight.ResumeLayout(false);
             this.grpLeft.ResumeLayout(false);
             this.grpBottom.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sTIMCONFIGBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,13 +315,14 @@
         private System.Windows.Forms.Button btnGoodsExt;
         private System.Windows.Forms.Button btnSaveConfig;
         private System.Windows.Forms.Button btnCustomLayout;
-        private System.Windows.Forms.TabControl tabMain;
-        private System.Windows.Forms.TabPage tabPageDetail;
-        private System.Windows.Forms.TabPage tabPageSearch;
         private System.Windows.Forms.TabPage tabPageDataGridView;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.BindingSource sTIMCONFIGBindingSource;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabPageDetail;
+        private System.Windows.Forms.TabPage tabPageSearch;
 
     }
 }

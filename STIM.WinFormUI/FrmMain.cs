@@ -59,8 +59,8 @@ namespace STIM.WinFormUI
 
             DtStruct = _bll.GetTableInformation(e.Node.Name).Tables[0];
 
-            _model = _bll.GetModel(e.Node.Name);
-            //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            //_model = _bll.GetModel(e.Node.Name);
+            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
             //按照自定义配置布局控件
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
@@ -111,6 +111,10 @@ namespace STIM.WinFormUI
         {
             CreateStimControl stimControl = new CreateStimControl(xElement, null, draggable);
             tabPageDetail.Controls.Add(stimControl.AutoStimControl);
+            //if (stimControl.AutoStimControl.DataFile is ComboBox)
+            //{
+            //    ((ComboBox) stimControl.AutoStimControl.DataFile).Text = "否";
+            //}
         }
 
         private void btnCustomLayout_Click(object sender, EventArgs e)
@@ -123,7 +127,7 @@ namespace STIM.WinFormUI
             string tableName = tvSingleTableList.SelectedNode.Name;
             var controls = tabPageDetail.Controls;
             _model.TABLE_NAME = tableName;
-            _model.DETAIL_FORM_XML = MakeXmlLinq(tableName, controls);
+            //_model.DETAIL_FORM_XML = MakeXmlLinq(tableName, controls);
 
             bool result = _bll.Update(_model);
             if (result)
@@ -154,7 +158,7 @@ namespace STIM.WinFormUI
                 XElement xEle =
                     new XElement("Column",
                         new XAttribute("Column_Name", control.Name),
-                        //new XAttribute("ControlType", control.GetType().ToString()),
+                    //new XAttribute("ControlType", control.GetType().ToString()),
                         new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
                         new XAttribute("Enabled", control.Enabled.ToString()),
@@ -184,7 +188,7 @@ namespace STIM.WinFormUI
 
             xDoc.Save(Application.StartupPath + "\\DetailForm.xml");
 
-            return xDoc.Declaration.ToString() + "\r\n" + xDoc.ToString(SaveOptions.None);
+            return xDoc.Declaration + xDoc.ToString(SaveOptions.DisableFormatting);
         }
 
         public string MakeXml(string tableName, Dictionary<Control, Dictionary<string, string>> dictControls)

@@ -1,10 +1,12 @@
 ﻿using System.Data;
+using Newtonsoft.Json.Linq;
 using STIM.WinFormUI.ExtControl;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using STIM.Utilities;
+using Newtonsoft.Json;
 
 namespace STIM.WinFormUI
 {
@@ -231,7 +233,23 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfComboBox(ComboBox control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.DropDownStyle = ComboBoxStyle.DropDownList;
-            //control.SelectedText = (string)objValue;
+            if (objAttribute.GetType().Name.Equals("XElement"))
+            {
+                XElement xElement = (XElement)objAttribute;
+                control.DropDownStyle = ComboBoxStyle.DropDownList;
+                var dataSource = xElement.Element("DataRule").Attribute("DataSource").Value;
+                JObject jObject = JObject.Parse(dataSource);//{'Y':'True','N':'False'}
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Value", typeof(string));
+                dt.Columns.Add("Display", typeof(string));
+                foreach (var item in jObject)
+                {
+                    dt.Rows.Add(item.Key, item.Value);
+                }
+                control.ValueMember = "Value";
+                control.DisplayMember = "Display";
+                control.DataSource = dt;
+            }
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
