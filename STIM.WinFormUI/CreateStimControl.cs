@@ -211,7 +211,16 @@ namespace STIM.WinFormUI
         private StimControl CreateStimWfCheckBox(CheckBox control, Object objAttribute, Object objValue, bool draggable)
         {
             //TODO 数据控件的处理操作 control.Checked = true;
-            //control.Checked = !objValue==null&& (bool)objValue;
+            if (objAttribute.GetType().Name.Equals("XElement"))
+            {
+                XElement xElement = (XElement)objAttribute;
+                var dataSource = xElement.Element("DataRule").Attribute("DataSource").Value;
+                JObject jObject = JObject.Parse(dataSource);//{'Y':'true','N':'false'}
+                if (objValue != null && dataSource.Contains((string)objValue))
+                {
+                    control.Checked = (bool)jObject.GetValue((string)objValue);
+                }
+            }
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);

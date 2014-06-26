@@ -158,7 +158,6 @@ namespace STIM.WinFormUI
                 XElement xEle =
                     new XElement("Column",
                         new XAttribute("Column_Name", control.Name),
-                    //new XAttribute("ControlType", control.GetType().ToString()),
                         new XAttribute("ControlType", control.Controls["TLP"].Controls["dataFile"].GetType().Name),
                         new XAttribute("Visible", control.Visible.ToString()),
                         new XAttribute("Enabled", control.Enabled.ToString()),

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using STIM.WinFormUI.ExtControl;
 
 namespace STIM.WinFormUI
@@ -36,7 +38,7 @@ namespace STIM.WinFormUI
         /// <summary>
         /// 表单配置元素集合
         /// </summary>
-        IEnumerable<XElement> xElements;
+        IEnumerable<XElement> xElement;
 
         DataGridViewRow DgvRow = new DataGridViewRow();
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
@@ -70,8 +72,8 @@ namespace STIM.WinFormUI
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
             {
                 xDocConfig = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
-                xElements = xDocConfig.Root.Elements();//.Select(el => el);
-                foreach (XElement item in xElements)
+                xElement = xDocConfig.Root.Elements();//.Select(el => el);
+                foreach (XElement item in xElement)
                 {
                     //字段名
                     var columnName = (string)item.Attribute("Column_Name");
@@ -85,8 +87,8 @@ namespace STIM.WinFormUI
                     //非空字段
                     //DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N"
                     //var test = xElements.Elements("DataRule").Single(el => (int)el.Attribute("Max") == 100);
-                    XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
-                    
+                    XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
+
                     pnlData.Controls.Add(stimControl.AutoStimControl);
                     //非空字段
                     if (xEl.Attribute("Nullable").Value == "N")
@@ -94,9 +96,10 @@ namespace STIM.WinFormUI
                         stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
                     }
                     //ComboBox
-                    if (stimControl.AutoStimControl.DataFile is ComboBox)
+                    if (stimControl.AutoStimControl.DataFile is ComboBox && columnValue!=null)
                     {
-                        ((ComboBox) stimControl.AutoStimControl.DataFile).SelectedValue = columnValue;
+                        //ComboBox的赋值操作只能在这里处理
+                        ((ComboBox)stimControl.AutoStimControl.DataFile).SelectedValue = columnValue;
                         //stimControl.AutoStimControl.DataFile.Text = "否";
                     }
                 }
@@ -126,7 +129,7 @@ namespace STIM.WinFormUI
                     ModifyData(controls, ref result);
                     break;
             }
-            if ("error" != result.ToString ())
+            if ("error" != result.ToString())
             {
                 if ((bool)result)
                 {
@@ -156,53 +159,68 @@ namespace STIM.WinFormUI
         /// <return></return>
         public object GetValueByType(Control control, DataRow row)
         {
-            object result = null;
-            Type type = control.GetType();
-            switch (type.Name)
+            try
             {
-                case "TextBox":
-                    result = ((TextBox)control).Text;
-                    break;
-                case "DateTimePicker":
-                    result = ((DateTimePicker)control).Value;
-                    break;
-                case "NumericUpDown":
-                    result = ((NumericUpDown)control).Value;
-                    break;
-                case "CheckBox":
-                    result = ((CheckBox)control).Checked;
-                    break;
-                case "RadioButton":
-                    result = ((RadioButton)control).Checked;
-                    break;
-                case "ComboBox":
-                    result = ((ComboBox)control).SelectedValue;
-                    break;
-                case "CheckedListBox":
-                    result = ((CheckedListBox)control).SelectedItems;
-                    break;
-                case "ListBox":
-                    result = ((ListBox)control).SelectedItems;
-                    break;
-                case "DataGridView":
-                    result = ((DataGridView)control).SelectedRows;
-                    break;
-                default:
-                    result = control.Text;
-                    break;
+                object result = null;
+                Type type = control.GetType();
+                switch (type.Name)
+                {
+                    case "TextBox":
+                        result = ((TextBox)control).Text;
+                        break;
+                    case "DateTimePicker":
+                        result = ((DateTimePicker)control).Value;
+                        break;
+                    case "NumericUpDown":
+                        result = ((NumericUpDown)control).Value;
+                        break;
+                    case "CheckBox":
+                        result = "Y";// ((CheckBox)control).Checked;
+                        XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == row["COLUMN_NAME"].ToString()).Elements("DataRule").Single();
+                        Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(xEl.Attribute("DataSource").Value);
+                        if (dict.Values.Contains(((CheckBox)control).Checked.ToString()))
+                        {
+                            //Get Key by Value (Dictionary)
+                            result = dict.Single(kv => kv.Value == ((CheckBox)control).Checked.ToString()).Key;
+                        }                       
+                        break;
+                    case "RadioButton":
+                        result = ((RadioButton)control).Checked;
+                        break;
+                    case "ComboBox":
+                        result = ((ComboBox)control).SelectedValue;
+                        break;
+                    case "CheckedListBox":
+                        result = ((CheckedListBox)control).SelectedItems;
+                        break;
+                    case "ListBox":
+                        result = ((ListBox)control).SelectedItems;
+                        break;
+                    case "DataGridView":
+                        result = ((DataGridView)control).SelectedRows;
+                        break;
+                    default:
+                        result = control.Text;
+                        break;
+                }
+                switch (row["DATA_TYPE"].ToString())
+                {
+                    case "NUMBER":
+                        return result;
+                        break;
+                    case "DATE":
+                        return "to_date('" + result + "','YYYY-MM-DD HH24:MI:SS')";
+                        break;
+                    default:
+                        return "'" + result + "'";
+                        break;
+                }
             }
-            switch (row["DATA_TYPE"].ToString())
+            catch (Exception ex)
             {
-                case "NUMBER":
-                    return result;
-                    break;
-                case "DATE":
-                    return "to_date('" + result + "','YYYY-MM-DD HH24:MI:SS')";
-                    break;
-                default:
-                    return "'" + result + "'";
-                    break;
+                throw ex;
             }
+
         }
         /// <summary>
         /// 新增数据
@@ -221,7 +239,7 @@ namespace STIM.WinFormUI
                 //值为空（此处''表示为空）
                 if ("''" == value.ToString())
                 {
-                    XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                    XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
                     //字段不能为空
                     if ((string)xEl.Attribute("Nullable") == "N")
                     {
@@ -279,7 +297,7 @@ namespace STIM.WinFormUI
                     //值为空（此处''表示为空）
                     if ("''" == value.ToString())
                     {
-                        XElement xEl = xElements.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                        XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
                         //字段不能为空
                         if ((string)xEl.Attribute("Nullable") == "N")
                         {
