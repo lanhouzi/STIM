@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -49,6 +50,8 @@
             this.btnGoodsExt = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
             this.btnCustomLayout = new System.Windows.Forms.Button();
+            this.maskedTxt = new System.Windows.Forms.MaskedTextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip.SuspendLayout();
             this.grpMain.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -191,6 +194,7 @@
             // 
             // grpBottom
             // 
+            this.grpBottom.Controls.Add(this.maskedTxt);
             this.grpBottom.Controls.Add(this.button6);
             this.grpBottom.Controls.Add(this.button5);
             this.grpBottom.Controls.Add(this.button4);
@@ -262,6 +266,16 @@
             this.btnCustomLayout.UseVisualStyleBackColor = true;
             this.btnCustomLayout.Click += new System.EventHandler(this.btnCustomLayout_Click);
             // 
+            // maskedTxt
+            // 
+            this.maskedTxt.BeepOnError = true;
+            this.maskedTxt.Location = new System.Drawing.Point(269, 21);
+            this.maskedTxt.Name = "maskedTxt";
+            this.maskedTxt.PromptChar = ' ';
+            this.maskedTxt.Size = new System.Drawing.Size(100, 21);
+            this.maskedTxt.TabIndex = 1;
+            this.toolTip.SetToolTip(this.maskedTxt, "message");
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -287,6 +301,7 @@
             this.grpRight.ResumeLayout(false);
             this.grpLeft.ResumeLayout(false);
             this.grpBottom.ResumeLayout(false);
+            this.grpBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +329,8 @@
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabPageDetail;
         private System.Windows.Forms.TabPage tabPageSearch;
+        private System.Windows.Forms.MaskedTextBox maskedTxt;
+        private System.Windows.Forms.ToolTip toolTip;
 
     }
 }
