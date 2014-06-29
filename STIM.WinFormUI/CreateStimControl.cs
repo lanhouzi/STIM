@@ -247,7 +247,7 @@ namespace STIM.WinFormUI
                 XElement xElement = (XElement)objAttribute;
                 control.DropDownStyle = ComboBoxStyle.DropDownList;
                 var dataSource = xElement.Element("DataRule").Attribute("DataSource").Value;
-                JObject jObject = JObject.Parse(dataSource);//{'Y':'True','N':'False'}
+                JObject jObject = JObject.Parse(dataSource);//{'Y':'是','N':'否'}
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Value", typeof(string));
                 dt.Columns.Add("Display", typeof(string));
