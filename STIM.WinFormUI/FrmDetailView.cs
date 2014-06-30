@@ -65,8 +65,8 @@ namespace STIM.WinFormUI
 
         private void FrmDetailView_Load(object sender, EventArgs e)
         {
-            _model = _bll.GetModel(TableName);
-            //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+            //_model = _bll.GetModel(TableName);
+            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
             //按照自定义配置布局控件
             if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
@@ -177,7 +177,7 @@ namespace STIM.WinFormUI
                     case "CheckBox":
                         result = "Y";// ((CheckBox)control).Checked;
                         XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == row["COLUMN_NAME"].ToString()).Elements("DataRule").Single();
-                        Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(xEl.Attribute("DataSource").Value);
+                        var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(xEl.Attribute("DataSource").Value);
                         if (dict.Values.Contains(((CheckBox)control).Checked.ToString()))
                         {
                             //Get Key by Value (Dictionary)
@@ -186,6 +186,9 @@ namespace STIM.WinFormUI
                         break;
                     case "RadioButton":
                         result = ((RadioButton)control).Checked;
+                        break;
+                    case "RadioGroup":
+                        result = ((StimWfControlGroup)control).FLP.Controls;
                         break;
                     case "ComboBox":
                         result = ((ComboBox)control).SelectedValue;

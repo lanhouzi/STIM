@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using STIM.WinFormUI.ExtControl;
 using System;
@@ -77,6 +79,10 @@ namespace STIM.WinFormUI
                 case "RadioButton":
                     RadioButton radioButton = new RadioButton();
                     AutoStimControl = CreateStimWfRadioButton(radioButton, xElement, objValue, draggable);
+                    break;
+                case "RadioGroup":
+                    StimWfControlGroup radioGroup = new StimWfControlGroup();
+                    AutoStimControl = CreateStimWfRadioGroup(radioGroup, xElement, objValue, draggable);
                     break;
                 case "ComboBox":
                     ComboBox comboBox = new ComboBox();
@@ -232,6 +238,33 @@ namespace STIM.WinFormUI
         {
             //TODO 数据控件的处理操作 control.Checked = true;
             //control.Checked = !objValue==null&& (bool)objValue;
+            StimControl stimControl = CreateStimBasic(control, objAttribute);
+            //拖动属性
+            stimControl.Draggable(draggable);
+            stimControl.BringToFront();
+            return stimControl;
+        }
+        private StimControl CreateStimWfRadioGroup(StimWfControlGroup control, Object objAttribute, Object objValue, bool draggable)
+        {
+            //TODO 数据控件的处理操作 control.Checked = true;
+            if (objAttribute.GetType().Name.Equals("XElement"))
+            {
+                XElement xElement = (XElement)objAttribute;
+                var dataSource = xElement.Element("DataRule").Attribute("DataSource").Value;                
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataSource);
+                foreach (var item in dict)
+                {
+                    RadioButton radio = new RadioButton
+                    {
+                        AutoSize=true,
+                        Tag=item.Key,
+                        Text=item.Value, 
+                        //赋值操作
+                        Checked=item.Key.Equals((string)objValue)
+                    };
+                    control.FLP.Controls.Add(radio);
+                }
+            }
             StimControl stimControl = CreateStimBasic(control, objAttribute);
             //拖动属性
             stimControl.Draggable(draggable);
