@@ -1,0 +1,9 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.DALFactory.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.DALFactory.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.IDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.Model.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.IDAL.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\bin\Debug\STIM.Model.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\obj\Debug\STIM.DALFactory.csprojResolveAssemblyReference.cache
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\obj\Debug\STIM.DALFactory.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.DALFactory\obj\Debug\STIM.DALFactory.pdb

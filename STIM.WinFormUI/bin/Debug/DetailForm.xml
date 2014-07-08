@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Table TableName="GOODS_EXT">
+  <Column Column_Name="GOODS_ID" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="10" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">GOODS_ID</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="N" DataSource="" />
+  </Column>
+  <Column Column_Name="GOODS_CLASS" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="10" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">GOODS_CLASS</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="COMPATIBILITY" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="10" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">COMPATIBILITY</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="UNIT_OF_MASTER" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="45" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">UNIT_OF_MASTER</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CASE" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="45" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CASE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="INNER_PACK" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="45" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">INNER_PACK</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_UNIT" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="80" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_UNIT</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_CASE" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="80" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_CASE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_INNER_PACK" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="80" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_INNER_PACK</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_PALLET" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="115" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_PALLET</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="COMMINGLE_BATCH" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="115" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">COMMINGLE_BATCH</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_OF_COMMINGLE_BATCH" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="115" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_OF_COMMINGLE_BATCH</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="OWNER_ID" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="150" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">OWNER_ID</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="N" DataSource="" />
+  </Column>
+  <Column Column_Name="ABC_CODE" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="150" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">ABC_CODE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PROVE_REPORT" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="150" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PROVE_REPORT</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CHECK_CYCLE" ControlType="NumericUpDown" Visible="True" Enabled="True" X="20" Y="185" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CHECK_CYCLE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CREATE_DATE" ControlType="DateTimePicker" Visible="True" Enabled="True" X="320" Y="185" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CREATE_DATE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CREATE_MAN" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="185" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CREATE_MAN</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="MODIFY_DATE" ControlType="DateTimePicker" Visible="True" Enabled="True" X="20" Y="220" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">MODIFY_DATE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="MODIFY_MAN" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="220" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">MODIFY_MAN</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="OUT_VALID" ControlType="NumericUpDown" Visible="True" Enabled="True" X="620" Y="220" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">OUT_VALID</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="ALLOT_FLAG" ControlType="ComboBox" Visible="True" Enabled="True" X="20" Y="255" W="250" H="28">
+    <Lable Visible="True" Enabled="True" W="85" H="21">ALLOT_FLAG</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="20">Y</DataControl>
+    <DataRule Nullable="N" DataSource="{'Y':'是','N':'否'}" />
+  </Column>
+  <Column Column_Name="COMMNOGOODS_FLAG" ControlType="CheckBox" Visible="True" Enabled="True" X="320" Y="255" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">COMMNOGOODS_FLAG</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Y</DataControl>
+    <DataRule Nullable="N" DataSource="{'Y':'true','N':'false'}" />
+  </Column>
+  <Column Column_Name="VOLRATIO" ControlType="NumericUpDown" Visible="True" Enabled="True" X="620" Y="255" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">VOLRATIO</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="ISDELETED" ControlType="RadioGroup" Visible="True" Enabled="True" X="20" Y="290" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">ISDELETED</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">0</DataControl>
+    <DataRule Nullable="Y" DataSource="{'1':'是','0':'否'}" />
+  </Column>
+  <Column Column_Name="ORG_ID" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="290" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">ORG_ID</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="N" DataSource="" />
+  </Column>
+  <Column Column_Name="CREATE_ORG" ControlType="TextBox" Visible="True" Enabled="True" X="620" Y="290" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CREATE_ORG</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CREATE_ORGSEQ" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="325" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CREATE_ORGSEQ</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CREATE_ROLE" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="325" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CREATE_ROLE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="WEIGHT" ControlType="NumericUpDown" Visible="True" Enabled="True" X="620" Y="325" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">WEIGHT</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="WEIGHT_UNIT" ControlType="TextBox" Visible="True" Enabled="True" X="20" Y="360" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">WEIGHT_UNIT</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="VOLUME" ControlType="TextBox" Visible="True" Enabled="True" X="320" Y="360" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">VOLUME</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="CLIENT_BATCHNUMS" ControlType="NumericUpDown" Visible="True" Enabled="True" X="620" Y="360" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">CLIENT_BATCHNUMS</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+  <Column Column_Name="PICK_QTY" ControlType="NumericUpDown" Visible="True" Enabled="True" X="475" Y="420" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">PICK_QTY</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="N" DataSource="" />
+  </Column>
+  <Column Column_Name="MAINTAIN_CYCLE" ControlType="NumericUpDown" Visible="True" Enabled="True" X="176" Y="420" W="250" H="29">
+    <Lable Visible="True" Enabled="True" W="85" H="21">MAINTAIN_CYCLE</Lable>
+    <DataControl Visible="True" Enabled="True" W="150" H="21">Value</DataControl>
+    <DataRule Nullable="Y" DataSource="" />
+  </Column>
+</Table>

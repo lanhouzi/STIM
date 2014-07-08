@@ -1,0 +1,13 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.OracleDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.OracleDAL.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.IDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.Model.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\WMS.DBUtility.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\Oracle.ManagedDataAccessDTC.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\WMS.DBUtility.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.IDAL.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\bin\Debug\STIM.Model.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\obj\Debug\STIM.OracleDAL.csprojResolveAssemblyReference.cache
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\obj\Debug\STIM.OracleDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.OracleDAL\obj\Debug\STIM.OracleDAL.pdb

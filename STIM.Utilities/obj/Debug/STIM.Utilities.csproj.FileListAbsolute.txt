@@ -1,0 +1,4 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Utilities\bin\Debug\STIM.Utilities.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Utilities\bin\Debug\STIM.Utilities.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Utilities\obj\Debug\STIM.Utilities.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Utilities\obj\Debug\STIM.Utilities.pdb

@@ -1,0 +1,12 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\bin\Debug\STIM.WpfUI.exe.config
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\bin\Debug\STIM.WpfUI.exe
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\bin\Debug\STIM.WpfUI.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\MainWindow.baml
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\MainWindow.g.cs
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\App.g.cs
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI_MarkupCompile.cache
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI.g.resources
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI.Properties.Resources.resources
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI.csproj.GenerateResource.Cache
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI.exe
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.WpfUI\obj\Debug\STIM.WpfUI.pdb

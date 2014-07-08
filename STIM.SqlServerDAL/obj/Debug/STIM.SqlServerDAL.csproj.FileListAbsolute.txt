@@ -1,0 +1,4 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.SqlServerDAL\bin\Debug\STIM.SqlServerDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.SqlServerDAL\bin\Debug\STIM.SqlServerDAL.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.SqlServerDAL\obj\Debug\STIM.SqlServerDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.SqlServerDAL\obj\Debug\STIM.SqlServerDAL.pdb

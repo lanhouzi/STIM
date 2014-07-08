@@ -1,0 +1,4 @@
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.MySqlDAL\bin\Debug\STIM.MySqlDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.MySqlDAL\bin\Debug\STIM.MySqlDAL.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.MySqlDAL\obj\Debug\STIM.MySqlDAL.dll
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.MySqlDAL\obj\Debug\STIM.MySqlDAL.pdb
