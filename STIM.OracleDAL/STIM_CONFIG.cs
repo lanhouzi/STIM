@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Text;
 using WMS.DBUtility;
+using System.Collections;
 
 namespace STIM.OracleDAL
 {
@@ -262,7 +263,43 @@ namespace STIM.OracleDAL
             strSql.AppendFormat(" WHERE TT.Row between {0} and {1}", startIndex, endIndex);
             return ora.Query(strSql.ToString());
         }
-
+        /// <summary>
+        /// 获取自定义sql返回的结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet getSqlResult(string sql)
+        {
+            return ora.Query(sql);
+        }
+        /// <summary>
+        /// 获取自定义sql返回的结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet getSearchResult(string sql,Hashtable ht)
+        {
+            List<OracleParameter> li = new List<OracleParameter>();
+            foreach (DictionaryEntry objDE in ht)
+            {
+                li.Add(ora.BuildOracleParameter(objDE.Key.ToString(), OracleDbType.Varchar2, ParameterDirection.Input, 0, objDE.Value.ToString()));
+            }
+            return ora.Query(sql, li.ToArray());
+        }
+        /// <summary>
+        /// 通过定义的sql验证输入的值
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet SqlCheckValue(string sql, Hashtable ht)
+        {
+            List<OracleParameter> li = new List<OracleParameter>();
+            foreach (DictionaryEntry objDE in ht)
+            {
+                li.Add(ora.BuildOracleParameter(":" + objDE.Key.ToString(), OracleDbType.Varchar2, ParameterDirection.Input, 0, objDE.Value.ToString()));
+            }
+            return ora.Query(sql,li.ToArray());
+        }
         /*
         /// <summary>
         /// 分页获取数据列表
@@ -347,15 +384,32 @@ namespace STIM.OracleDAL
         /// <param name="tableName">表名</param>
         /// <param name="strWhere">查询条件</param>
         /// <returns></returns>
-        public DataSet GetDataList(string tableName, string strWhere)
+        public DataSet GetDataList(string tableName, ArrayList al)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select * from " + tableName);
-            if (!string.IsNullOrEmpty(strWhere))
+            List<OracleParameter> li = new List<OracleParameter>();
+
+            if (al.Count > 0)
             {
-                strSql.Append(" where " + strWhere);
+                strSql.Append(" where 1=1");
+                for (int i = 0; i < al.Count; i++)
+                {
+                    ArrayList temp = (ArrayList)al[i];
+                    if (temp[2].ToString().Equals("3"))
+                    {
+                        strSql.Append(" and " + temp[0].ToString() + "=to_date(:" + temp[0].ToString() + ",'yyyy-mm-dd')");
+                        li.Add(ora.BuildOracleParameter(":" + temp[0].ToString(), OracleDbType.Varchar2, ParameterDirection.Input, 0, temp[1].ToString()));
+                    }
+                    else
+                    {
+                        string temp2 = "%" + temp[1] + "%";
+                        strSql.Append(" and " + temp[0].ToString() + " like :" + temp[0].ToString());
+                        li.Add(ora.BuildOracleParameter(":" + temp[0].ToString(), OracleDbType.Varchar2, ParameterDirection.Input, 0, temp2));
+                    }
+                }
             }
-            return ora.Query(strSql.ToString());
+            return ora.Query(strSql.ToString(),li.ToArray());
         }
         /// <summary>
         /// 是否存在数据记录

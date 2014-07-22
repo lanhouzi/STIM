@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.grpSearch = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.GrpflPanelSearch = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSearch = new System.Windows.Forms.Button();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsMenuAdd = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +44,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.grpData = new System.Windows.Forms.GroupBox();
-            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.dgvData = new ORG.UILib.Controls.DataGridViewEx(this.components);
             this.rowChecker = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.grpSearch.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
@@ -55,27 +55,31 @@
             // 
             // grpSearch
             // 
-            this.grpSearch.Controls.Add(this.richTextBox1);
-            this.grpSearch.Controls.Add(this.btnSearch);
+            this.grpSearch.AutoSize = true;
+            this.grpSearch.Controls.Add(this.GrpflPanelSearch);
             this.grpSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.grpSearch.Location = new System.Drawing.Point(0, 0);
+            this.grpSearch.Margin = new System.Windows.Forms.Padding(10);
             this.grpSearch.Name = "grpSearch";
-            this.grpSearch.Size = new System.Drawing.Size(734, 100);
+            this.grpSearch.Size = new System.Drawing.Size(984, 35);
             this.grpSearch.TabIndex = 1;
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "查询条件";
             // 
-            // richTextBox1
+            // GrpflPanelSearch
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(14, 20);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(636, 74);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.GrpflPanelSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GrpflPanelSearch.AutoSize = true;
+            this.GrpflPanelSearch.Location = new System.Drawing.Point(13, 15);
+            this.GrpflPanelSearch.Name = "GrpflPanelSearch";
+            this.GrpflPanelSearch.Size = new System.Drawing.Size(959, 14);
+            this.GrpflPanelSearch.TabIndex = 0;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(656, 71);
+            this.btnSearch.Location = new System.Drawing.Point(337, 8);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 0;
@@ -129,21 +133,21 @@
             // 
             // flpAction
             // 
-            this.flpAction.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flpAction.Controls.Add(this.btnAdd);
             this.flpAction.Controls.Add(this.btnModify);
             this.flpAction.Controls.Add(this.btnDelete);
             this.flpAction.Controls.Add(this.btnRefresh);
+            this.flpAction.Controls.Add(this.btnSearch);
             this.flpAction.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flpAction.Location = new System.Drawing.Point(0, 100);
+            this.flpAction.Location = new System.Drawing.Point(0, 35);
             this.flpAction.Name = "flpAction";
-            this.flpAction.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.flpAction.Size = new System.Drawing.Size(734, 31);
+            this.flpAction.Padding = new System.Windows.Forms.Padding(10, 5, 0, 0);
+            this.flpAction.Size = new System.Drawing.Size(984, 40);
             this.flpAction.TabIndex = 3;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(13, 3);
+            this.btnAdd.Location = new System.Drawing.Point(13, 8);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 0;
@@ -153,7 +157,7 @@
             // 
             // btnModify
             // 
-            this.btnModify.Location = new System.Drawing.Point(94, 3);
+            this.btnModify.Location = new System.Drawing.Point(94, 8);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
             this.btnModify.TabIndex = 1;
@@ -163,7 +167,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(175, 3);
+            this.btnDelete.Location = new System.Drawing.Point(175, 8);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 2;
@@ -173,7 +177,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(256, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(256, 8);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 3;
@@ -185,9 +189,9 @@
             // 
             this.grpData.Controls.Add(this.dgvData);
             this.grpData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpData.Location = new System.Drawing.Point(0, 131);
+            this.grpData.Location = new System.Drawing.Point(0, 75);
             this.grpData.Name = "grpData";
-            this.grpData.Size = new System.Drawing.Size(734, 330);
+            this.grpData.Size = new System.Drawing.Size(984, 487);
             this.grpData.TabIndex = 4;
             this.grpData.TabStop = false;
             this.grpData.Text = "数据列表";
@@ -197,19 +201,29 @@
             this.dgvData.AllowUserToAddRows = false;
             this.dgvData.AllowUserToDeleteRows = false;
             this.dgvData.AllowUserToOrderColumns = true;
-            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.ColumnDisplayIndexSave = false;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.rowChecker});
+            this.dgvData.ColumnVisibleEnableSave = true;
+            this.dgvData.ColumnWidthSave = true;
             this.dgvData.ContextMenuStrip = this.contextMenuStrip;
             this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvData.Location = new System.Drawing.Point(3, 17);
             this.dgvData.MultiSelect = false;
+            this.dgvData.MyForm = this;
             this.dgvData.Name = "dgvData";
             this.dgvData.RowHeadersWidth = 30;
             this.dgvData.RowTemplate.Height = 23;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(728, 310);
+            this.dgvData.ShowdgvTotalRow = false;
+            this.dgvData.ShowTotal = 0;
+            this.dgvData.Size = new System.Drawing.Size(978, 467);
+            this.dgvData.SumColumnList = new string[] {
+        ""};
+            this.dgvData.SumField = "";
             this.dgvData.TabIndex = 0;
+            this.dgvData.UserName = "SystemUserName";
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
             // 
             // rowChecker
@@ -225,20 +239,26 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 461);
+            this.ClientSize = new System.Drawing.Size(984, 562);
             this.Controls.Add(this.grpData);
             this.Controls.Add(this.flpAction);
             this.Controls.Add(this.grpSearch);
+            this.KeyPreview = true;
             this.Name = "FrmDataView";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmDataView";
+            this.Text = "列表界面";
             this.Load += new System.EventHandler(this.FrmDataView_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FrmDataView_KeyPress);
             this.grpSearch.ResumeLayout(false);
+            this.grpSearch.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
             this.flpAction.ResumeLayout(false);
             this.grpData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -252,14 +272,14 @@
         private System.Windows.Forms.ToolStripSeparator tsSeparator;
         private System.Windows.Forms.ToolStripMenuItem tsMenuRefresh;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.FlowLayoutPanel flpAction;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnModify;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.GroupBox grpData;
-        private System.Windows.Forms.DataGridView dgvData;
+        private ORG.UILib.Controls.DataGridViewEx dgvData;
         private System.Windows.Forms.DataGridViewCheckBoxColumn rowChecker;
+        private System.Windows.Forms.FlowLayoutPanel GrpflPanelSearch;
     }
 }

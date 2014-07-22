@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Collections;
 
 namespace STIM.IDAL
 {
@@ -35,6 +36,25 @@ namespace STIM.IDAL
         /// 获得数据列表
         /// </summary>
         DataSet GetList(string strWhere);
+
+        /// <summary>
+        /// 获取定义的sql返回结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        DataSet getSqlResult(string sql);
+        /// <summary>
+        /// 获取自定义sql返回的结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        DataSet getSearchResult(string sql, Hashtable ht);
+        /// <summary>
+        /// 通过定义的sql验证输入的值
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        DataSet SqlCheckValue(string sql,Hashtable ht);
         /// <summary>
         /// 根据分页获得数据列表
         /// </summary>
@@ -57,7 +77,7 @@ namespace STIM.IDAL
         /// <param name="tableName">表名</param>
         /// <param name="strWhere">查询条件</param>
         /// <returns></returns>
-        DataSet GetDataList(string tableName, string strWhere);
+        DataSet GetDataList(string tableName, ArrayList al);
         /// <summary>
         /// 是否存在数据记录
         /// </summary>

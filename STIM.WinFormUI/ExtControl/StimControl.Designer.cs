@@ -38,7 +38,7 @@
             this.TLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.TLP.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.TLP.ColumnCount = 2;
-            this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.TLP.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TLP.Controls.Add(this.lblFile, 0, 0);
             this.TLP.Location = new System.Drawing.Point(0, 0);
@@ -55,7 +55,7 @@
             this.lblFile.AutoEllipsis = true;
             this.lblFile.Location = new System.Drawing.Point(4, 4);
             this.lblFile.Name = "lblFile";
-            this.lblFile.Size = new System.Drawing.Size(85, 21);
+            this.lblFile.Size = new System.Drawing.Size(74, 21);
             this.lblFile.TabIndex = 0;
             this.lblFile.Text = "FileName：";
             this.lblFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

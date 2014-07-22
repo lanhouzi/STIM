@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using STIM.WinFormUI.ExtControl;
+using System.Collections;
 
 namespace STIM.WinFormUI
 {
@@ -57,57 +56,60 @@ namespace STIM.WinFormUI
             DtStruct = dtStruct;
             PkList = pkList;
             DgvRow = dgvRow;
-            if ("Modify" == AddOrModify)
-            {
-                ckbContinue.Enabled = false;
-            }
         }
 
         private void FrmDetailView_Load(object sender, EventArgs e)
         {
-            //_model = _bll.GetModel(TableName);
-            _model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
-
-            //按照自定义配置布局控件
-            if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
+            try
             {
-                xDocConfig = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
-                xElement = xDocConfig.Root.Elements();//.Select(el => el);
-                foreach (XElement item in xElement)
+                _model = _bll.GetModel(TableName);
+                //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
+
+                //按照自定义配置布局控件
+                if (!string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
                 {
-                    //字段名
-                    var columnName = (string)item.Attribute("Column_Name");
-                    //字段值
-                    object columnValue = null;
-                    if (AddOrModify == "Modify")
+                    xDocConfig = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
+                    xElement = xDocConfig.Root.Elements().Select(el => el);
+                    foreach (XElement item in xElement)
                     {
-                        columnValue = DgvRow.Cells[columnName].Value;
-                    }
-                    CreateStimControl stimControl = new CreateStimControl(item, columnValue);
-                    //非空字段
-                    //DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N"
-                    //var test = xElements.Elements("DataRule").Single(el => (int)el.Attribute("Max") == 100);
-                    XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
+                        //字段名
+                        var columnName = (string)item.Attribute("Column_Name");
+                        //字段值
+                        object columnValue = null;
+                        if (AddOrModify == "Modify")
+                        {
+                            columnValue = DgvRow.Cells[columnName].Value;
+                        }
+                        CreateStimControl stimControl = new CreateStimControl(item, columnValue, AddOrModify);
+                        //非空字段
+                        //DtStruct.Select("COLUMN_NAME='" + columnName + "'")[0]["NULLABLE"].ToString() == "N"
+                        //var test = xElements.Elements("DataRule").Single(el => (int)el.Attribute("Max") == 100);
+                        //XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == columnName).Elements("DataRule").Single();
 
-                    pnlData.Controls.Add(stimControl.AutoStimControl);
-                    //非空字段
-                    if (xEl.Attribute("Nullable").Value == "N")
-                    {
-                        stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
+                        pnlData.Controls.Add(stimControl.AutoStimControl);
+                        //非空字段
+                        if (((string)item.Attribute("Required")).Equals("True"))
+                        {
+                            stimControl.AutoStimControl.lblFile.ForeColor = Color.Red;
+                        }
+                        //ComboBox
+                        if (stimControl.AutoStimControl.DataFile is ComboBox && columnValue != null)
+                        {
+                            //ComboBox的赋值操作只能在这里处理
+                            ((ComboBox)stimControl.AutoStimControl.DataFile).SelectedValue = columnValue;
+                            //stimControl.AutoStimControl.DataFile.Text = "否";
+                        }
                     }
-                    //ComboBox
-                    if (stimControl.AutoStimControl.DataFile is ComboBox && columnValue!=null)
-                    {
-                        //ComboBox的赋值操作只能在这里处理
-                        ((ComboBox)stimControl.AutoStimControl.DataFile).SelectedValue = columnValue;
-                        //stimControl.AutoStimControl.DataFile.Text = "否";
-                    }
+
                 }
-
+                else
+                {
+                    MessageBox.Show("尚未对表【" + TableName + "】进行自定义配置，请新增该表的自定义配置！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch( Exception ex)
             {
-                MessageBox.Show("尚未对表【" + TableName + "】进行自定义配置，请新增该表的自定义配置！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
             }
         }
 
@@ -140,91 +142,10 @@ namespace STIM.WinFormUI
                     MessageBox.Show("保存失败！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (ckbContinue.Checked)
-                {
-                    //todo:
-                }
-                else ;
-                {
-                    this.Close();
-                }
+                
             }
         }
 
-        /// <summary>
-        /// 根据控件类型返回值
-        /// </summary>
-        /// <param name="control">目标控件</param>
-        /// <param name="row"></param>
-        /// <return></return>
-        public object GetValueByType(Control control, DataRow row)
-        {
-            try
-            {
-                object result = null;
-                Type type = control.GetType();
-                switch (type.Name)
-                {
-                    case "TextBox":
-                        result = ((TextBox)control).Text;
-                        break;
-                    case "DateTimePicker":
-                        result = ((DateTimePicker)control).Value;
-                        break;
-                    case "NumericUpDown":
-                        result = ((NumericUpDown)control).Value;
-                        break;
-                    case "CheckBox":
-                        result = "Y";// ((CheckBox)control).Checked;
-                        XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == row["COLUMN_NAME"].ToString()).Elements("DataRule").Single();
-                        var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(xEl.Attribute("DataSource").Value);
-                        if (dict.Values.Contains(((CheckBox)control).Checked.ToString()))
-                        {
-                            //Get Key by Value (Dictionary)
-                            result = dict.Single(kv => kv.Value == ((CheckBox)control).Checked.ToString()).Key;
-                        }                       
-                        break;
-                    case "RadioButton":
-                        result = ((RadioButton)control).Checked;
-                        break;
-                    case "RadioGroup":
-                        result = ((StimWfControlGroup)control).FLP.Controls;
-                        break;
-                    case "ComboBox":
-                        result = ((ComboBox)control).SelectedValue;
-                        break;
-                    case "CheckedListBox":
-                        result = ((CheckedListBox)control).SelectedItems;
-                        break;
-                    case "ListBox":
-                        result = ((ListBox)control).SelectedItems;
-                        break;
-                    case "DataGridView":
-                        result = ((DataGridView)control).SelectedRows;
-                        break;
-                    default:
-                        result = control.Text;
-                        break;
-                }
-                switch (row["DATA_TYPE"].ToString())
-                {
-                    case "NUMBER":
-                        return result;
-                        break;
-                    case "DATE":
-                        return "to_date('" + result + "','YYYY-MM-DD HH24:MI:SS')";
-                        break;
-                    default:
-                        return "'" + result + "'";
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
         /// <summary>
         /// 新增数据
         /// </summary>
@@ -236,17 +157,23 @@ namespace STIM.WinFormUI
             StringBuilder sbAddSql = new StringBuilder("insert into " + TableName);
             StringBuilder sbColumns = new StringBuilder("(");
             StringBuilder sbValues = new StringBuilder(" values (");
+            //获取填写的值
+            Hashtable htItem = new Hashtable();
+            CreateStimControl csc = new CreateStimControl();
+
             foreach (StimControl item in controls)
-            {
-                var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
+            { 
+                DataRow row=DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0];
+                string value = csc.GetValueByType(item.DataFile);
+                
                 //值为空（此处''表示为空）
-                if ("''" == value.ToString())
+                if (string.IsNullOrEmpty(value.ToString()))
                 {
-                    XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                    //XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
                     //字段不能为空
-                    if ((string)xEl.Attribute("Nullable") == "N")
+                    if (row["Nullable"].ToString() == "N" || item.property.ControlRequired == 1)
                     {
-                        MessageBox.Show(item.lblFile.Text + " 不能为空！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(item.lblFile.Text + " 不能为空！", "提示消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         result = "error";
                         return;
                     }
@@ -255,14 +182,25 @@ namespace STIM.WinFormUI
                 else
                 {
                     sbColumns.Append("," + item.Name);
-                    sbValues.Append("," + value);
+                    string type = row["DATA_TYPE"].ToString();
+                    if (type.Equals("NUMBER"))
+                        sbValues.Append("," + value);
+                    else if (value.ToString().ToLower().Equals("sysdate"))
+                        sbValues.Append("," + value);
+                    else if (type.Equals("DATE") || type.ToUpper().IndexOf("TIMESTAMP") == 0)
+                        sbValues.Append(",to_date('" + value + "','YYYY-MM-DD HH24:MI:SS')");
+                    else
+                    {
+                        sbValues.Append(",'" + value + "'");
+                    }
                 }
                 //如果是主键
                 if (PkList.Contains(item.Name))
                 {
                     sbExists.Append(" and " + item.Name);
-                    sbExists.Append("=" + value);
+                    sbExists.Append("='" + value + "'");
                 }
+                htItem.Add(item.property, value);
             }
             sbColumns.Remove(1, 1);//移除第一个逗号
             sbValues.Remove(9, 1);//移除第一个逗号
@@ -270,6 +208,21 @@ namespace STIM.WinFormUI
             sbValues.Append(")");
             sbAddSql.Append(sbColumns);
             sbAddSql.Append(sbValues);
+
+            //数据验证格式和正确性验证
+           foreach (DictionaryEntry objDE in htItem)
+            {
+                string val = objDE.Value.ToString();
+                StimControlProperty property = objDE.Key as StimControlProperty;
+                //验证输入值
+                if (!checkValudate(property, val, htItem))
+                {
+                    MessageBox.Show(property.Text + " 输入值错误！", "提示消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    result = "error";
+                    return;
+                }
+                
+            }
             //是否存在数据记录
             if (_bll.ExistsData(sbExists.ToString()))
             {
@@ -291,18 +244,23 @@ namespace STIM.WinFormUI
             StringBuilder sbUpdateSql = new StringBuilder("update " + TableName + " set ");
             StringBuilder sbKeyValue = new StringBuilder();
             StringBuilder sbWhere = new StringBuilder(" where 1=1 ");
+            //获取填写的值
+            Hashtable htItem = new Hashtable();
+            CreateStimControl csc = new CreateStimControl();
+
             foreach (StimControl item in controls)
             {
+                DataRow row = DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0];
+                string value = csc.GetValueByType(item.DataFile);
                 //如果不是主键
                 if (!PkList.Contains(item.Name))
                 {
-                    var value = GetValueByType(item.DataFile, DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]);
                     //值为空（此处''表示为空）
-                    if ("''" == value.ToString())
+                    if (string.IsNullOrEmpty(value.ToString()))
                     {
-                        XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
+                        //if (row["Nullable"].ToString() == "N" || item.property.ControlRequired == 1)XElement xEl = xElement.Single(el => (string)el.Attribute("Column_Name") == item.Name).Elements("DataRule").Single();
                         //字段不能为空
-                        if ((string)xEl.Attribute("Nullable") == "N")
+                        if (row["Nullable"].ToString() == "N" || item.property.ControlRequired == 1)
                         {
                             MessageBox.Show(item.lblFile.Text + " 不能为空！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             result = "error";
@@ -311,24 +269,100 @@ namespace STIM.WinFormUI
                     }
                     //值不为空
                     else
-                    {
+                    {;
                         sbKeyValue.Append("," + item.Name);
-                        sbKeyValue.Append("=" + value);
+                        string type = row["DATA_TYPE"].ToString();
+                        if (type.Equals("NUMBER"))
+                            sbKeyValue.Append("=" + value);
+                        else if (type.Equals("DATE") || type.ToUpper().IndexOf("TIMESTAMP") == 0)
+                            sbKeyValue.Append("=to_date('" + value + "','YYYY-MM-DD HH24:MI:SS')");
+                        else if (value.ToString().ToLower().Equals("sysdate"))
+                            sbKeyValue.Append("=" + value);
+                        else
+                        {
+                            sbKeyValue.Append("='" + value + "'");
+                        }
                     }
                 }
                 else
                 {
                     sbWhere.Append(" and " + item.Name);
-                    sbWhere.Append("=" +
-                                   GetValueByType(item.DataFile,
-                                       DtStruct.Select("COLUMN_NAME='" + item.Name + "'")[0]));
+                    sbWhere.Append("='" + value + "'");
                 }
+                htItem.Add(item.property, value);
             }
             sbKeyValue.Remove(0, 1);//移除第一个逗号
             sbUpdateSql.Append(sbKeyValue);
             sbUpdateSql.Append(sbWhere);
+            //数据验证格式和正确性验证
+            foreach (DictionaryEntry objDE in htItem)
+            {
+                string val = objDE.Value.ToString();
+                StimControlProperty property = objDE.Key as StimControlProperty;
+                //验证输入值
+                if (!checkValudate(property, val, htItem))
+                {
+                    MessageBox.Show(property.Text + " 输入值错误！", "提示消息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    result = "error";
+                    return;
+                }
 
+            }
             result = _bll.UpdateData(sbUpdateSql.ToString());
+        }
+
+        /// <summary>
+        /// 验证输入的是否正确
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="ValueStr"></param>
+        /// <returns></returns>
+        private bool checkValudate(StimControlProperty property, string ValueStr, Hashtable htItem)
+        {
+            bool ch = true;
+            if (property.CheckRegular != null)
+            {
+                PropertyGrid.Item.SYSMethod Method=new PropertyGrid.Item.SYSMethod();
+                //0,系统方法；1,正则表达式；2,sql语句
+                switch (property.CheckRegular.ValueType)
+                {
+                    case "0": ch = Method.CheckValue(property.CheckRegular.ValueApp, ValueStr); break;
+                    case "1": ch = Method.RegexCheck(ValueStr,property.CheckRegular.ValueRegular); break;
+                    case "2":
+                        string sql=property.CheckRegular.ValueSql;
+                        Hashtable ht = new Hashtable();
+                        //ht.Add(property.Name, ValueStr);
+                        //获取系统默认值
+                        PropertyGrid.Item.SysValue _sysValue = new PropertyGrid.Item.SysValue();
+                        foreach (PropertyGrid.TxtValObject obj in _sysValue.ValueList)
+                        {
+                            if (sql.IndexOf(":"+obj.Val)>0)
+                            {
+                                ht.Add(obj.Val, _sysValue.GetValue(obj.Val));
+                            }
+                        }
+                        //获取界面其他控件的值
+                        foreach (DictionaryEntry objDE in htItem)
+                        {
+                            StimControlProperty tempProperty = objDE.Key as StimControlProperty;
+                            if (sql.IndexOf(":" + tempProperty.Name) > 0)
+                            {
+                                ht.Add(tempProperty.Name, objDE.Value);
+                            }
+                        }
+                        ch = (new BLL.STIM_CONFIG()).SqlCheckValue(sql, ht); 
+                        break;
+                }
+            }
+            return ch;
+        }
+
+        private void FrmDetailView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                this.SelectNextControl(this.ActiveControl, true, true, true, true);
+            }
         }
     }
 }

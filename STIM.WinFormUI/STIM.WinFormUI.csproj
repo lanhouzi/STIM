@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,9 +57,9 @@
     <ApplicationIcon>stim.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Lib\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -82,17 +85,33 @@
     <Compile Include="ExtControl\AdjustTextBox.Designer.cs">
       <DependentUpon>AdjustTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtControl\CRectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ExtControl\StimControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ExtControl\StimControl.Designer.cs">
       <DependentUpon>StimControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtControl\StimWfControlGroup.cs">
+    <Compile Include="ExtControl\StimControlProperty.cs" />
+    <Compile Include="ExtControl\RadioButtonGroup.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ExtControl\StimWfControlGroup.Designer.cs">
-      <DependentUpon>StimWfControlGroup.cs</DependentUpon>
+    <Compile Include="ExtControl\RadioButtonGroup.Designer.cs">
+      <DependentUpon>RadioButtonGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtControl\CheckBoxGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtControl\CheckBoxGroup.Designer.cs">
+      <DependentUpon>CheckBoxGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtControl\TextBoxFrm.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExtControl\TextBoxFrm.Designer.cs">
+      <DependentUpon>TextBoxFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmDataView.cs">
       <SubType>Form</SubType>
@@ -120,11 +139,59 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyGrid\ComboBoxItem .cs" />
+    <Compile Include="PropertyGrid\ComboBoxItemTypeConvert.cs" />
+    <Compile Include="PropertyGrid\EnumConverter.cs" />
+    <Compile Include="PropertyGrid\Check\FrmCheckValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGrid\Check\FrmCheckValue.Designer.cs">
+      <DependentUpon>FrmCheckValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGrid\DataSource\FrmDataSource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGrid\DataSource\FrmDataSource.Designer.cs">
+      <DependentUpon>FrmDataSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGrid\DefaultValue\FrmValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGrid\DefaultValue\FrmValue.Designer.cs">
+      <DependentUpon>FrmValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGrid\Item\SysValue.cs" />
+    <Compile Include="PropertyGrid\DataSource\ListItemDialog.cs" />
+    <Compile Include="PropertyGrid\BoolItem.cs" />
+    <Compile Include="PropertyGrid\EnumFile.cs" />
+    <Compile Include="PropertyGrid\Item\SYSMethod.cs" />
+    <Compile Include="PropertyGrid\Select\FrmSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGrid\Select\FrmSet.Designer.cs">
+      <DependentUpon>FrmSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGrid\Select\FrmDialog.cs" />
+    <Compile Include="PropertyGrid\Select\FrmShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGrid\Select\FrmShow.Designer.cs">
+      <DependentUpon>FrmShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyGrid\Select\ValueObject.cs" />
+    <Compile Include="PropertyGrid\TxtValObject.cs" />
+    <Compile Include="PropertyGrid\DefaultValue\ValueObject.cs" />
+    <Compile Include="PropertyGrid\DefaultValue\ValueDialog.cs" />
+    <Compile Include="PropertyGrid\Check\CheckValueDialog.cs" />
+    <Compile Include="PropertyGrid\Check\CheckValueObject.cs" />
     <EmbeddedResource Include="ExtControl\StimControl.resx">
       <DependentUpon>StimControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtControl\StimWfControlGroup.resx">
-      <DependentUpon>StimWfControlGroup.cs</DependentUpon>
+    <EmbeddedResource Include="ExtControl\RadioButtonGroup.resx">
+      <DependentUpon>RadioButtonGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtControl\CheckBoxGroup.resx">
+      <DependentUpon>CheckBoxGroup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDataView.resx">
       <DependentUpon>FrmDataView.cs</DependentUpon>
@@ -145,6 +212,21 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="PropertyGrid\Check\FrmCheckValue.resx">
+      <DependentUpon>FrmCheckValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyGrid\DataSource\FrmDataSource.resx">
+      <DependentUpon>FrmDataSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyGrid\DefaultValue\FrmValue.resx">
+      <DependentUpon>FrmValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyGrid\Select\FrmSet.resx">
+      <DependentUpon>FrmSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyGrid\Select\FrmShow.resx">
+      <DependentUpon>FrmShow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,6 +245,14 @@
     <Content Include="stim.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\UILib\UILib.csproj">
+      <Project>{4C051CE9-D03D-4BCA-872E-D0C4E20B2004}</Project>
+      <Name>UILib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Utilities\Utilities.csproj">
+      <Project>{56F83C94-6E50-4023-944E-8974E8CB1AC3}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\STIM.BLL\STIM.BLL.csproj">
       <Project>{201FC394-7F60-462C-BA1D-94616BA7B87F}</Project>
       <Name>STIM.BLL</Name>
@@ -171,13 +261,13 @@
       <Project>{EA875293-54A1-420B-A006-FED71E2AC234}</Project>
       <Name>STIM.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\STIM.NativePropGrid\STIM.NativePropGrid.csproj">
+      <Project>{7DB85AA8-3AC4-4003-9267-D09C1A33C448}</Project>
+      <Name>STIM.NativePropGrid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\STIM.OracleDAL\STIM.OracleDAL.csproj">
       <Project>{d5843c3c-b0fa-4c0e-8f63-d070d75bfc68}</Project>
       <Name>STIM.OracleDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\STIM.Utilities\STIM.Utilities.csproj">
-      <Project>{a5d2e172-9ada-4c0b-98d4-0c9e2af7154d}</Project>
-      <Name>STIM.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +292,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,6 +2,7 @@
 using STIM.IDAL;
 using System.Collections.Generic;
 using System.Data;
+using System.Collections;
 
 namespace STIM.BLL
 {
@@ -145,9 +146,9 @@ namespace STIM.BLL
         /// <param name="tableName">表名</param>
         /// <param name="strWhere">查询条件</param>
         /// <returns></returns>
-        public DataSet GetDataList(string tableName, string strWhere)
+        public DataSet GetDataList(string tableName, ArrayList al)
         {
-            return dal.GetDataList(tableName, strWhere);
+            return dal.GetDataList(tableName, al);
         }
         /// <summary>
         /// 是否存在数据记录
@@ -182,6 +183,71 @@ namespace STIM.BLL
         public bool DeleteDataList(string tableName, string strWhere, string strValues)
         {
             return dal.DeleteDataList(tableName, strWhere, strValues);
+        }
+
+        /// <summary>
+        /// 获取定义的sql返回结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet getSqlResult(string sql)
+        {
+            return dal.getSqlResult(sql);
+        }
+        /// <summary>
+        /// 获取自定义sql返回的结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet getSearchResult(string sql, Hashtable ht)
+        {
+            return dal.getSearchResult(sql, ht);
+        }
+        /// <summary>
+        /// 获取定义的sql返回结构的第一个列的值
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public string getSqlDefaultValue(string sql)
+        {
+            try
+            {
+                using (DataSet ds = dal.getSqlResult(sql))
+                {
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        return ds.Tables[0].Rows[0][0].ToString();
+                    }
+                }
+                return string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        /// <summary>
+        /// 通过定义的sql验证输入的值
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public bool SqlCheckValue(string sql, Hashtable ht)
+        {
+            try
+            {
+                using (DataSet ds = dal.SqlCheckValue(sql,ht))
+                {
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
         #endregion  ExtensionMethod
     }

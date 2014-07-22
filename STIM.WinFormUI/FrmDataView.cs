@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using STIM.WinFormUI.ExtControl;
+using System.Collections;
 
 namespace STIM.WinFormUI
 {
@@ -32,6 +34,12 @@ namespace STIM.WinFormUI
             InitializeComponent();
             dgvData.AutoGenerateColumns = false;
         }
+        public FrmDataView(string tablename)
+        {
+            InitializeComponent();
+            dgvData.AutoGenerateColumns = false;
+            this.TableName = tablename;
+        }
 
         private void FrmDataView_Load(object sender, EventArgs e)
         {
@@ -47,22 +55,46 @@ namespace STIM.WinFormUI
             }
             //_model.DATAGRIDVIEW_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
             //按照自定义配置布局控件
-            if (_model != null && !string.IsNullOrEmpty(_model.DATAGRIDVIEW_XML))
+            if (_model != null && !string.IsNullOrEmpty(_model.DETAIL_FORM_XML))
             {
-                XDocument xDoc = XDocument.Parse(_model.DATAGRIDVIEW_XML, LoadOptions.None);
+                XDocument xDoc = XDocument.Parse(_model.DETAIL_FORM_XML, LoadOptions.None);
                 //Lambda
                 IEnumerable<XElement> xElements = xDoc.Root.Elements().Select(el => el);
+                
+                int _layoutRow = -1; // 表单布局 行
+                int _layoutColumn = -1;// 表单布局 列
+
                 foreach (XElement item in xElements)
                 {
+                   string ListConditionFlag = item.Attribute("ListConditionFlag").Value;
+                   string ListShowFlag= item.Attribute("ListShowFlag").Value;
+                   
                     var dgvCol = new DataGridViewTextBoxColumn
                     {
                         Name = (string)item.Attribute("Column_Name"),
-                        HeaderText = (string)item.Attribute("Column_Name"),
+                        HeaderText = (string)item.Element("Lable").Value.TrimEnd(':').TrimEnd('：'),
                         DataPropertyName = (string)item.Attribute("Column_Name"),
-                        ReadOnly = true
+                        Visible = ListShowFlag.Equals("True"),
                     };
                     dgvData.Columns.Add(dgvCol);
+
+                    if (ListConditionFlag.Equals("True"))
+                    {
+                        CreateStimControl stimControl = new CreateStimControl(item, null, "add");
+                        _layoutColumn++;
+                        //3表示显示3列
+                        if (_layoutColumn % 3 == 0)
+                        {
+                            _layoutColumn = 0;
+                            _layoutRow++;
+                        }
+                        stimControl.AutoStimControl.Location = new Point(20 + _layoutColumn * 300, 20 + _layoutRow * 35);
+                        GrpflPanelSearch.Controls.Add(stimControl.AutoStimControl);
+                        stimControl.AutoStimControl.Visible = true;
+                        stimControl.AutoStimControl.DataFile.Enabled= true;
+                    }   
                 }
+                //grpSearch.Height = (_layoutRow +1)* 35 + 20;
             }
             //系统自动有序布局控件
             else
@@ -138,8 +170,25 @@ namespace STIM.WinFormUI
         /// </summary>
         public void LoadData()
         {
-            StringBuilder sbWhere = new StringBuilder("ROWNUM<=500");
-            dgvData.DataSource = _bll.GetDataList(TableName, sbWhere.ToString()).Tables[0].DefaultView;
+            ArrayList al = new ArrayList();
+            CreateStimControl csc = new CreateStimControl();
+            foreach (Control item in grpSearch.Controls)
+            {
+                if (item is StimControl)
+                {
+                    string name=(item as StimControl).Name;
+                    string value = csc.GetValueByType((item as StimControl).DataFile);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        ArrayList altemp = new ArrayList();
+                        altemp.Insert(0, name);
+                        altemp.Insert(1, value);
+                        altemp.Insert(2, (item as StimControl).DataFile.GetType().Name.Equals("DateTimePicker") ? "3" : "0");
+                        al.Add(altemp);
+                    }
+                }
+            }
+            dgvData.DataSource = _bll.GetDataList(TableName, al).Tables[0].DefaultView;
         }
         /// <summary>
         /// 新增数据
@@ -219,6 +268,14 @@ namespace STIM.WinFormUI
             }
         }
         #endregion
+
+        private void FrmDataView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                this.SelectNextControl(this.ActiveControl, true, true, true, true);
+            }
+        }
 
     }
 }

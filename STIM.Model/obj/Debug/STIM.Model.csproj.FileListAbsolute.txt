@@ -2,3 +2,4 @@ D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Model\bin\Debug\STIM.Mode
 D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Model\bin\Debug\STIM.Model.pdb
 D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Model\obj\Debug\STIM.Model.dll
 D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Model\obj\Debug\STIM.Model.pdb
+D:\Work\华润医药\WMSDotNet\2.CODE\WMSApp\STIM\STIM.Model\obj\Debug\STIM.Model.csprojResolveAssemblyReference.cache
