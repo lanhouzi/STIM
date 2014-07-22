@@ -12,7 +12,7 @@ using System.Collections;
 
 namespace STIM.WinFormUI
 {
-    public partial class FrmDataView : Form
+    public partial class FrmListView : ORG.UILib.Forms.BaseForm
     {
         /// <summary>
         /// 表名
@@ -29,16 +29,22 @@ namespace STIM.WinFormUI
         BLL.STIM_CONFIG _bll = new BLL.STIM_CONFIG();
         Model.STIM_CONFIG _model = new Model.STIM_CONFIG();
 
-        public FrmDataView()
+        public FrmListView()
         {
             InitializeComponent();
             dgvData.AutoGenerateColumns = false;
         }
-        public FrmDataView(string tablename)
+        public FrmListView(string tablename)
         {
             InitializeComponent();
             dgvData.AutoGenerateColumns = false;
             this.TableName = tablename;
+
+            this.tsBaseVisible = true;
+            this.tsbSearchEnable = true;
+            this.tsbAddEnable = true;
+            this.tsbDelEnable = false;
+            this.tsbUpdateEnable = false;
         }
 
         private void FrmDataView_Load(object sender, EventArgs e)
@@ -142,21 +148,24 @@ namespace STIM.WinFormUI
         {
             LoadData();
         }
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void FrmListView_tSMIAdd_click(object sender, EventArgs e)
         {
             AddData();
         }
-        private void btnModify_Click(object sender, EventArgs e)
-        {
-            ModifyData();
-        }
-        private void btnDelete_Click(object sender, EventArgs e)
+
+        private void FrmListView_tSMIDel_click(object sender, EventArgs e)
         {
             DeleteData();
         }
-        private void btnRefresh_Click(object sender, EventArgs e)
+
+        private void FrmListView_tSMISearch_click(object sender, EventArgs e)
         {
-            LoadData();
+                LoadData();
+        }
+
+        private void FrmListView_tSMIUpdate_click(object sender, EventArgs e)
+        {
+            ModifyData();
         }
         private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -188,7 +197,22 @@ namespace STIM.WinFormUI
                     }
                 }
             }
-            dgvData.DataSource = _bll.GetDataList(TableName, al).Tables[0].DefaultView;
+            DataSet ds= _bll.GetDataList(TableName, al);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                dgvData.DataSource = ds.Tables[0].DefaultView;
+                this.tsbDelEnable = true;
+                this.tsbUpdateEnable = true;
+                tsMenuModify.Enabled = true;
+                tsMenuDelete.Enabled = true;
+            }
+            else
+            {
+                this.tsbDelEnable = false;
+                this.tsbUpdateEnable = false;
+                tsMenuModify.Enabled = false;
+                tsMenuDelete.Enabled = false;
+            }
         }
         /// <summary>
         /// 新增数据
@@ -196,8 +220,10 @@ namespace STIM.WinFormUI
         public void AddData()
         {
             FrmDetailView frm = new FrmDetailView("Add", TableName, DtStruct, PkList);
-            frm.ShowDialog();
-            LoadData();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
         }
         /// <summary>
         /// 修改数据
@@ -211,8 +237,10 @@ namespace STIM.WinFormUI
                 {
                     DataGridViewRow dgvRow = dgvData.Rows[rowIndex];
                     FrmDetailView frm = new FrmDetailView("Modify", TableName, DtStruct, PkList, dgvRow);
-                    frm.ShowDialog();
-                    LoadData();
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
                 }
             }
         }
@@ -276,6 +304,8 @@ namespace STIM.WinFormUI
                 this.SelectNextControl(this.ActiveControl, true, true, true, true);
             }
         }
+
+       
 
     }
 }

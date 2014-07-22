@@ -62,6 +62,7 @@ namespace STIM.WinFormUI
         {
             try
             {
+                this.Text = this.TableName ;
                 _model = _bll.GetModel(TableName);
                 //_model.DETAIL_FORM_XML = XDocument.Load(Application.StartupPath + "\\DetailForm.xml").ToString();
 
@@ -115,6 +116,7 @@ namespace STIM.WinFormUI
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.No;
             this.Close();
         }
 
@@ -136,6 +138,9 @@ namespace STIM.WinFormUI
                 if ((bool)result)
                 {
                     MessageBox.Show("保存成功！", "消息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
